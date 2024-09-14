@@ -1,0 +1,129 @@
+<div class="register-form">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Create Account</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-grid-list cols="2" rowHeight="100px" gutterSize="10px" [formGroup]="registerForm">
+        <mat-grid-tile>
+          <mat-form-field color="accent">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="first_name">
+            <mat-error *ngIf="registerForm.get('first_name')?.hasError('required')">
+              First Name is required!
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('first_name')?.hasError('pattern')">
+         Only letters are allowed.
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field color="accent">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="last_name">
+            <mat-error *ngIf="registerForm.get('last_name')?.hasError('required')">
+              Last Name is required!
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('last_name')?.hasError('pattern')">
+             Only letters are allowed!
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <mat-form-field color="accent">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput formControlName="dob">
+            <mat-error *ngIf="registerForm.get('dob')?.hasError('required')">
+              Date of Birth is required!
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('dob')?.hasError('pattern')">
+   Use YYYY-MM-DD format!
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <mat-form-field color="accent">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput formControlName="mobileNumber">
+            <mat-error *ngIf="registerForm.get('mobileNumber')?.hasError('required')">
+              Mobile Number is required!
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('mobileNumber')?.hasError('pattern')">
+            Must be 10 digits.
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2">
+          <mat-form-field color="accent">
+            <mat-label>Zipcode</mat-label>
+            <input matInput formControlName="zipcode">
+            <mat-error *ngIf="registerForm.get('zipcode')?.hasError('required')">
+              Zipcode is required!
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('zipcode')?.hasError('pattern')">
+          Must be 5 digits!
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field color="accent">
+            <mat-label>Gender</mat-label>
+            <input matInput formControlName="gender">
+            <mat-error *ngIf="registerForm.get('gender')?.hasError('required')">
+              Gender is required!
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('gender')?.hasError('pattern')">
+         Must be Male, Female, or Other!
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field color="accent">
+            <mat-label>Blood Group</mat-label>
+            <input matInput formControlName="blood_group">
+            <mat-error *ngIf="registerForm.get('blood_group')?.hasError('required')">
+              Blood Group is required!
+            </mat-error>
+            <mat-error *ngIf="registerForm.get('blood_group')?.hasError('pattern')">
+        Must be A+, A-, B+, B-, AB+, AB-, O+, O-
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="accent" (click)="register()">Register</button>
+    </mat-card-actions>
+
+    <mat-card-actions>
+      <h4>Already have an account?</h4>
+      <a mat-stroked-button color="accent" routerLink="/login">Login</a>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div class="library-info">
+  <h1>Information</h1>
+  <mat-list>
+    <mat-list-item>
+      <p>Once you place an order, an approval request will be sent to the admin. If that is approved, your order will be processed.</p>
+    </mat-list-item>
+    <mat-list-item>
+      <p>You can have a maximum of 3 medicines ordered that have not been picked up.</p>
+    </mat-list-item>
+    <mat-list-item>
+      <p>You can exchange a medicine after 1 year if expired.</p>
+    </mat-list-item>
+    <mat-list-item>
+      <p>If a medicine is not picked up after 10 days, you will receive an email reminder.</p>
+    </mat-list-item>
+    <mat-list-item>
+      <p>After the 10th day, a fine of 50 Rs will be imposed every day for each medicine that has not been picked up. This fine will be communicated to you via email daily.</p>
+    </mat-list-item>
+    <mat-list-item>
+      <p>If your total fine exceeds 500 Rs or if the medicine is damaged, the admin can block your account.</p>
+    </mat-list-item>
+  </mat-list>
+</div>

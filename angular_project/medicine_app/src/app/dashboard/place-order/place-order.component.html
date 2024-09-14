@@ -1,0 +1,142 @@
+<div class="order-form">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Place Order</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-grid-list cols="2" rowHeight="100px" gutterSize="10px" [formGroup]="orderForm">
+
+        <mat-grid-tile colspan="2">
+          <mat-form-field color="accent">
+            <mat-label>Patient ID</mat-label>
+            <input matInput formControlName="patient_id">
+            <mat-error *ngIf="orderForm.get('patient_id')?.hasError('required')">
+              Patient ID is required!
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="2">
+          <mat-form-field color="accent">
+            <mat-label>Mobile</mat-label>
+            <input matInput formControlName="mobile">
+            <mat-error *ngIf="orderForm.get('mobile')?.hasError('required')">
+              Mobile number is required!
+            </mat-error>
+            <mat-error *ngIf="orderForm.get('mobile')?.hasError('pattern')">
+              Must be a valid mobile number.
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="2">
+          <mat-form-field color="accent">
+            <mat-label>Delivery Type</mat-label>
+            <mat-select formControlName="delivery_type">
+              <mat-option value="pickup">Pickup</mat-option>
+              <mat-option value="delivery">Delivery</mat-option>
+            </mat-select>
+            <mat-error *ngIf="orderForm.get('delivery_type')?.hasError('required')">
+              Delivery type is required!
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile *ngIf="orderForm.get('delivery_type')?.value === 'delivery'" colspan="2">
+          <mat-form-field color="accent">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address">
+            <mat-error *ngIf="orderForm.get('address')?.hasError('required')">
+              Address is required for delivery!
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile *ngIf="orderForm.get('delivery_type')?.value === 'delivery'" colspan="1">
+          <mat-form-field color="accent">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city">
+            <mat-error *ngIf="orderForm.get('city')?.hasError('required')">
+              City is required!
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="1">
+          <mat-form-field color="accent">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state">
+            <mat-error *ngIf="orderForm.get('state')?.hasError('required')">
+              State is required!
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="2">
+          <mat-form-field color="accent">
+            <mat-label>Zipcode</mat-label>
+            <input matInput formControlName="zipcode">
+            <mat-error *ngIf="orderForm.get('zipcode')?.hasError('required')">
+              Zipcode is required!
+            </mat-error>
+            <mat-error *ngIf="orderForm.get('zipcode')?.hasError('pattern')">
+              Must be a valid zipcode!
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+
+
+
+        <div formArrayName="items">
+          <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+            <!-- Medicine ID Field -->
+            <mat-grid-tile colspan="1">
+              <mat-form-field color="accent">
+                <mat-label>Medicine ID</mat-label>
+                <input matInput formControlName="medicine_id">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <!-- Quantity Field -->
+            <mat-grid-tile colspan="1">
+              <mat-form-field color="accent">
+                <mat-label>Quantity</mat-label>
+                <input matInput formControlName="quantity" type="number">
+              </mat-form-field>
+            </mat-grid-tile>
+          </div>
+        </div>
+
+      </mat-grid-list>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="accent" type="submit">Place Order</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div class="order-info">
+  <h1> Information</h1>
+  <mat-list>
+    <mat-list-item>
+      <p>Once you place an order, an approval request will be sent to the admin. If approved, your order will be processed.</p>
+    </mat-list-item>
+    <mat-list-item>
+      <p>You can order a maximum of 3 medicines that have not yet been picked up.</p>
+    </mat-list-item>
+    <mat-list-item>
+      <p>Expired medicines can be exchanged after one year.</p>
+    </mat-list-item>
+    <mat-list-item>
+      <p>If medicines are not picked up after 10 days, you will receive an email reminder.</p>
+    </mat-list-item>
+    <mat-list-item>
+      <p>A fine of 50 Rs per day will be imposed for medicines not picked up after 10 days. You will be notified by email.</p>
+    </mat-list-item>
+    <mat-list-item>
+      <p>If the total fine exceeds 500 Rs or the medicine is damaged, your account may be blocked.</p>
+    </mat-list-item>
+  </mat-list>
+</div>

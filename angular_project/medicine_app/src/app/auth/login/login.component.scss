@@ -1,0 +1,54 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.login-card {
+  flex: 1;
+  max-width: 600px;
+  border-radius: 2rem;
+}
+
+.login-image {
+  max-width: 700px;
+  height: 60vh;
+  margin-left: 10px;
+  border-radius: 2rem;
+  opacity: 0.9;
+}
+
+mat-card {
+  mat-card-header {
+    display: flex;
+    justify-content: center;
+
+    mat-card-title {
+      font-size: 2rem;
+      // color: $dark-accent-A200;
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+    padding-top: 1rem;
+  }
+
+  mat-card-actions {
+    button {
+      margin: auto;
+      width: 80%;
+    }
+
+    h4 {
+      margin: 0;
+      padding-right: 1rem;
+    }
+  }
+}

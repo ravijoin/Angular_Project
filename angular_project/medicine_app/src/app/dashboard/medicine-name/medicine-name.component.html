@@ -1,0 +1,162 @@
+<!-- <mat-form-field color="accent" appearance="outline">
+  <mat-label>Search Medicines</mat-label>
+  <input matInput (input)="searchMedicines(searchField.value)" #searchField placeholder="Enter medicine name">
+  <button mat-icon-button matSuffix>
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-form-field>
+
+<mat-card *ngIf="loading">
+  <mat-card-content>
+    <mat-spinner></mat-spinner> Searching for medicines...
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="!loading && getMedicineCount() > 0">
+  <mat-card-content>
+    Showing {{ getMedicineCount() }} Medicines.
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="!loading && getMedicineCount() === 0">
+  <mat-card-content>
+    No medicines found.
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="errorMessage">
+  <mat-card-content>
+    <span style="color: red;">{{ errorMessage }}</span>
+  </mat-card-content>
+</mat-card>
+
+<mat-accordion multi="true" *ngIf="!loading && getMedicineCount() > 0">
+  <ng-container *ngFor="let item of medicinesToDisplay">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ item.name | titlecase }}
+        </mat-panel-title>
+        <mat-panel-description>
+          Price: {{ item.price }} | Available: {{ item.ordered ? 'Not Available' : 'Available' }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <table mat-table [dataSource]="[item]" class="mat-elevation-z8">
+
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element"> {{ element.price }} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="available">
+          <th mat-header-cell *matHeaderCellDef> Availability </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.ordered ? 'Not Available' : 'Available' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="order">
+          <th mat-header-cell *matHeaderCellDef> Order </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary" [disabled]="element.ordered">
+              Order
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </mat-expansion-panel>
+  </ng-container>
+</mat-accordion> -->
+
+
+
+
+<!-- //New -->
+
+ <mat-form-field color="accent" appearance="outline">
+  <mat-label>Search Medicines</mat-label>
+  <input matInput (input)="searchMedicines(searchField.value)" #searchField>
+  <button mat-icon-button matSuffix>
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-form-field>
+
+<mat-card>
+  <mat-card-content>
+    Showing Results for {{ getMedicineCount() }} Medicines.
+  </mat-card-content>
+</mat-card>
+
+<mat-accordion multi="true">
+  <ng-container *ngFor="let item of medicinesToDisplay">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ item.category | titlecase }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ item.subCategory | titlecase }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <table mat-table [dataSource]="item.medicines">
+
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element"> {{ element.price }} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="available">
+          <th mat-header-cell *matHeaderCellDef> Availability </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.ordered ? "Not Available" : "Available" }}
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="order">
+          <th mat-header-cell *matHeaderCellDef> Order </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button color="accent" [disabled]="element.ordered" routerLink="orders">
+              Order
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      </table>
+    </mat-expansion-panel>
+  </ng-container>
+</mat-accordion>
