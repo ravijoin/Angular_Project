@@ -1,20 +1,18 @@
 <mat-toolbar color="primary">
   <span>Equality Healthcare</span>
   <span class="spacer"></span>
-  <mat-slide-toggle color="accent" [checked]="isDark"
-  (change)="setTheme($event.checked)">
-Dark Mode
-</mat-slide-toggle>
+  <mat-slide-toggle
+    color="accent"
+    [checked]="isDark"
+    (change)="setTheme($event.checked)"
+  >
+    Dark Mode
+  </mat-slide-toggle>
 
-<!-- <button mat-icon-button [matMenuTriggerFor]="menu">
-<mat-icon>account_circle</mat-icon>
-</button> -->
   <div class="user-info">
-      @if (loggedIn) {
-      <div class="name">Hi, Naman Jain</div>
-      }
-      <!-- <button mat-raised-button color="accent" routerLink="/profile">Profile</button> -->
-      <button mat-raised-button color="warn" (click)="logout()">Log
-          Out</button>
+    @if (loggedIn) {
+    <div class="name">Hi, Naman Jain</div>
+    }
+    <button mat-raised-button color="warn" (click)="logout()">Log Out</button>
   </div>
 </mat-toolbar>

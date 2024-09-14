@@ -4,7 +4,6 @@ import { ApiService } from '../../service/api.service';
 import { UserType } from '../../../models/models';
 import { PatientService } from '../../service/patient.service';
 
-
 export interface NavigationItem {
   value: string;
   link: string;
@@ -12,7 +11,7 @@ export interface NavigationItem {
 @Component({
   selector: 'app-page-side-nav-bar',
   templateUrl: './page-side-nav-bar.component.html',
-  styleUrl: './page-side-nav-bar.component.scss'
+  styleUrl: './page-side-nav-bar.component.scss',
 })
 export class PageSideNavBarComponent {
   panelName: string = '';
@@ -52,8 +51,5 @@ export class PageSideNavBarComponent {
         }
       },
     });
-
+  }
 }
-}
-
-

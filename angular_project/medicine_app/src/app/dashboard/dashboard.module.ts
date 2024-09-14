@@ -7,16 +7,12 @@ import { MedicineNameComponent } from './medicine-name/medicine-name.component';
 import { MedicineMaintainanceComponent } from './medicine-maintainance/medicine-maintainance.component';
 import { PlaceOrderComponent } from './place-order/place-order.component';
 
-
-
-
-
 @NgModule({
-  declarations: [MedicineNameComponent,MedicineMaintainanceComponent, PlaceOrderComponent],
-  imports: [
-    CommonModule,
-    SharedModule,
-    MaterialModule
-  ]
+  declarations: [
+    MedicineNameComponent,
+    MedicineMaintainanceComponent,
+    PlaceOrderComponent,
+  ],
+  imports: [CommonModule, SharedModule, MaterialModule],
 })
-export class DashboardModule { }
+export class DashboardModule {}

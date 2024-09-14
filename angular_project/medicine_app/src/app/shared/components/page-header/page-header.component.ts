@@ -5,15 +5,17 @@ import { PatientService } from '../../service/patient.service';
 @Component({
   selector: 'app-page-header',
   templateUrl: './page-header.component.html',
-  styleUrl: './page-header.component.scss'
+  styleUrl: './page-header.component.scss',
 })
 export class PageHeaderComponent implements OnInit {
   loggedIn: boolean = false;
   name: string = '';
   @HostBinding('class') class: string = '';
   isDark: boolean = false;
-  constructor(private patientService: PatientService,private renderer: Renderer2)
-  {
+  constructor(
+    private patientService: PatientService,
+    private renderer: Renderer2
+  ) {
     patientService.userStatus.subscribe({
       next: (res) => {
         if (res == 'loggedIn') {

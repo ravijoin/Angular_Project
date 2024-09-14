@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Book, BooksByCategory } from '../../models/models';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../shared/service/api.service';
 import { MedicineService } from '../../shared/service/medicine.service';
@@ -7,10 +6,64 @@ import { MedicineService } from '../../shared/service/medicine.service';
 @Component({
   selector: 'app-medicine-name',
   templateUrl: './medicine-name.component.html',
-  styleUrl: './medicine-name.component.scss'
+  styleUrl: './medicine-name.component.scss',
 })
 export class MedicineNameComponent {
-  // medicinesToDisplay: any[] = [];
+  medicines: any[] = [
+    {
+      category: 'Painkillers',
+      subCategory: 'NSAIDs',
+      medicines: [
+        { id: 1, name: 'Ashwagandha', price: 10, ordered: false },
+        { id: 2, name: 'Aspirin', price: 15, ordered: false },
+        { id: 3, name: 'Shilajit', price: 15, ordered: true },
+        { id: 4, name: 'Trichup', price: 55, ordered: true },
+        { id: 5, name: 'beta', price: 112, ordered: true },
+        { id: 6, name: 'Thyrox', price: 15.45, ordered: true },
+      ],
+    },
+    {
+      category: 'Antibiotics',
+      subCategory: 'Penicillin',
+      medicines: [
+        { id: 7, name: 'Amoxicillin', price: 25, ordered: true },
+        { id: 8, name: 'Ciprofloxacin', price: 30, ordered: false },
+        { id: 9, name: 'dolo', price: 30, ordered: false },
+        { id: 10, name: 'zifi', price: 130, ordered: false },
+      ],
+    },
+  ];
+
+  medicinesToDisplay = this.medicines; // Display all medicines by default
+  displayedColumns: string[] = ['id', 'name', 'price', 'available', 'order'];
+
+  // Method to search medicines by name
+  searchMedicines(searchValue: string) {
+    const searchValueLower = searchValue.toLowerCase();
+    this.medicinesToDisplay = this.medicines
+      .map((item) => ({
+        ...item,
+        medicines: item.medicines.filter((med: { name: string }) =>
+          med.name.toLowerCase().includes(searchValueLower)
+        ),
+      }))
+      .filter((item) => item.medicines.length > 0); // Filter out categories with no matching medicines
+  }
+
+  // Method to get total number of medicines displayed
+  getMedicineCount(): number {
+    return this.medicinesToDisplay.reduce(
+      (acc, item) => acc + item.medicines.length,
+      0
+    );
+  }
+}
+
+
+
+// Not used dynamic code as getting error as 'Api is key is required as i have binded in below code'
+
+// medicinesToDisplay: any[] = [];
   // displayedColumns: string[] = [
   //   'dosage_type',
   //   'medicine_name',
@@ -77,53 +130,3 @@ export class MedicineNameComponent {
   //   return this.medicinesToDisplay.reduce((count, item) => count + item.medicines.length, 0);
   // }
 
-
-
-
-
-  medicines: any[] = [
-    {
-      category: 'Painkillers',
-      subCategory: 'NSAIDs',
-      medicines: [
-        { id: 1, name: 'Ashwagandha', price: 10, ordered: false },
-        { id: 2, name: 'Aspirin', price: 15, ordered: false },
-        { id: 3, name: 'Shilajit', price: 15, ordered: true },
-        { id: 4, name: 'Trichup', price: 55, ordered: true },
-        { id: 5, name: 'beta', price: 112, ordered: true },
-        { id: 6, name: 'Thyrox', price: 15.45, ordered: true },
-
-      ]
-    },
-    {
-      category: 'Antibiotics',
-      subCategory: 'Penicillin',
-      medicines: [
-        { id: 7, name: 'Amoxicillin', price: 25, ordered: true },
-        { id: 8, name: 'Ciprofloxacin', price: 30, ordered: false },
-        { id: 9, name: 'dolo', price: 30, ordered: false },
-        { id: 10, name: 'zifi', price: 130, ordered: false },
-
-      ]
-    }
-  ];
-
-  medicinesToDisplay = this.medicines; // Display all medicines by default
-  displayedColumns: string[] = ['id', 'name', 'price', 'available', 'order'];
-
-  // Method to search medicines by name
-  searchMedicines(searchValue: string) {
-    const searchValueLower = searchValue.toLowerCase();
-    this.medicinesToDisplay = this.medicines
-      .map(item => ({
-        ...item,
-        medicines: item.medicines.filter((med: { name: string; }) => med.name.toLowerCase().includes(searchValueLower))
-      }))
-      .filter(item => item.medicines.length > 0); // Filter out categories with no matching medicines
-  }
-
-  // Method to get total number of medicines displayed
-  getMedicineCount(): number {
-    return this.medicinesToDisplay.reduce((acc, item) => acc + item.medicines.length, 0);
-  }
-}

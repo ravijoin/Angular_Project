@@ -5,12 +5,15 @@ import { MedicineService } from '../../shared/service/medicine.service';
 @Component({
   selector: 'app-place-order',
   templateUrl: './place-order.component.html',
-  styleUrl: './place-order.component.scss'
+  styleUrl: './place-order.component.scss',
 })
 export class PlaceOrderComponent {
   orderForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private medicineService: MedicineService) {}
+  constructor(
+    private fb: FormBuilder,
+    private medicineService: MedicineService
+  ) {}
 
   ngOnInit(): void {
     this.orderForm = this.fb.group({
@@ -26,7 +29,7 @@ export class PlaceOrderComponent {
       items: this.fb.array([]), // Array of items
       latitude: [''],
       longitude: [''],
-      full_address: [''] // Required if lat-long is not provided
+      full_address: [''], // Required if lat-long is not provided
     });
 
     // Add pre-filled items to the form
@@ -44,11 +47,13 @@ export class PlaceOrderComponent {
       { medicine_id: 'Eli4pMFfzobV63G67jtjZw==', quantity: 2 },
     ];
 
-    medicinesToOrder.forEach(item => {
-      this.items.push(this.fb.group({
-        medicine_id: [item.medicine_id, Validators.required],
-        quantity: [item.quantity, [Validators.required, Validators.min(1)]]
-      }));
+    medicinesToOrder.forEach((item) => {
+      this.items.push(
+        this.fb.group({
+          medicine_id: [item.medicine_id, Validators.required],
+          quantity: [item.quantity, [Validators.required, Validators.min(1)]],
+        })
+      );
     });
   }
 

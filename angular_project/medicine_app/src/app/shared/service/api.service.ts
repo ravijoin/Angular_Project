@@ -42,23 +42,7 @@ export class ApiService {
     return localStorage.getItem('access_token') != null;  // Check if the token exists
   }
 
-  getUserInfo(): User | null {
-    if (!this.isLoggedIn()) return null;
 
-    // You can modify this to handle user data from an API or stored token
-    const user: User = {
-      // Example for getting a stored user ID
-      first_name: localStorage.getItem('first_name') || '',
-      last_name: localStorage.getItem('last_name') || '',
-      dob: localStorage.getItem('dob') || '',
-      mobileNumber: localStorage.getItem('mobileNumber') || '',
-      zipcode: localStorage.getItem('zipcode') || '',
-      gender: localStorage.getItem('gender') || '',
-      blood_group: localStorage.getItem('blood_group') || '',
-      userType: UserType[localStorage.getItem('userType') as keyof typeof UserType] ,
-    };
-    return user;
-  }
 
   logOut() {
     localStorage.removeItem('access_token');
