@@ -11,9 +11,9 @@ import { RegisterResponse, User } from '../../models/models';
 })
 export class PatientService {
 
-  public baseUrlAdd = 'https://api.evitalrx.in/v1/fulfillment/patients/add';
-  public baseUrlView = 'https://api.evitalrx.in/v1/fulfillment/patients/view';
-public apikey = "wFIMP75eG1sQEh8vVAdXykgzF4mLhDw3";
+  private baseUrlAdd = 'https://api.evitalrx.in/v1/fulfillment/patients/add';
+  private baseUrlView = 'https://api.evitalrx.in/v1/fulfillment/patients/view';
+  private apikey = "wFIMP75eG1sQEh8vVAdXykgzF4mLhDw3";
 
 userStatus: Subject<string> = new Subject();
 

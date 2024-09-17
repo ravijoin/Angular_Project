@@ -49,21 +49,19 @@ export class LoginComponent {
           localStorage.setItem('access_token', res.token);
           localStorage.setItem('user', JSON.stringify(res.user)); // Ensure `res.user` is set if available
           this.patientService.userStatus.next('loggedIn');
-        } else if (res.status === 'not found') {
-          this.snackBar.open('Credentials are invalid!', 'OK',{ duration: 2000 });
-        } else if (res.status === 'unapproved') {
-          this.snackBar.open('Your account is not approved by Admin!', 'OK',{ duration: 2000 });
-        } else if (res.status === 'blocked') {
-          this.snackBar.open('Your account is BLOCKED. Please go to admin office to unblock.', 'OK',{ duration: 2000 });
-        } else {
-          this.snackBar.open('Unexpected response format.', 'OK',{ duration: 2000 });
+
+        // Show success snackbar
+        this.snackBar.open('Logged in successfully!', 'OK', { duration: 2000 });
         }
+
       },
       error: (error) => {
         console.error('Login error:', error);
         this.snackBar.open('Failed to login. Please try again.', 'OK',{ duration: 2000 });
       }
-    });
+    }
+
+  );
   }
 
 

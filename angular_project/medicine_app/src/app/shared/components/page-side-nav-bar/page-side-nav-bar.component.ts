@@ -41,10 +41,11 @@ export class PageSideNavBarComponent {
             }
           } else {
             // Handle case where user info is null
-            console.error('User info is null.');
-            router.navigateByUrl('/login');
+            // console.log('User info is null.');
+            // router.navigateByUrl('/login');
           }
-        } else if (status === 'loggedOff') {
+        }
+        else if (status === 'loggedOff') {
           this.panelName = 'Patient Panel';
           router.navigateByUrl('/login');
           this.navItems = [{ value: 'View Medicines', link: '/dashboard' }];
