@@ -1,5 +1,3 @@
-![image](https://github.com/user-attachments/assets/8798007a-75ee-4653-8fbf-0eae9ad1c9d4)## Medicine_App
-
 ## Description
 This project is a comprehensive Angular-based web application designed for managing medicine orders. It includes user authentication, medicine search, patient management, and order processing functionalities.
 
@@ -48,10 +46,21 @@ Fill the Login form if successfully registered .
 
    ![image](https://github.com/user-attachments/assets/a942f833-d29c-456e-8c2c-bbcf2b3c3801)
 
-
-6. **Checkout Page**: 
-   - In progress. As api is key required this message I'm getting in logging.
+4. **Checkout Page**: 
    - Will display detailed information about selected medicines and facilitate the checkout process.
+   - Medicineid and Quantity will automatically patch in checkout form.
+
+     ![image](https://github.com/user-attachments/assets/819a85bc-9893-4516-94b9-c8e13bccea3f)
+
+    If medicine is not available search for the alternatives and update the cart.
+   
+    ![image](https://github.com/user-attachments/assets/0325b7a6-c159-4174-935c-905da404740b)
+
+   After updating the cart and successfully filling the form ,it will be navigated to place order.
+   
+   ![image](https://github.com/user-attachments/assets/17dc0474-35ce-4fbf-8370-0f72e18d2fae)
+
+
 
 7. **Order Placement**: 
    - In progress. As api is key required this message I'm getting in logging.
