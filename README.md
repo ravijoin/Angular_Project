@@ -1,4 +1,4 @@
-## Medicine_App
+![image](https://github.com/user-attachments/assets/8798007a-75ee-4653-8fbf-0eae9ad1c9d4)## Medicine_App
 
 ## Description
 This project is a comprehensive Angular-based web application designed for managing medicine orders. It includes user authentication, medicine search, patient management, and order processing functionalities.
@@ -35,22 +35,18 @@ Fill the Login form if successfully registered .
    
    ![image](https://github.com/user-attachments/assets/0e18d8ea-0a36-4255-ad21-a4270e86c97b)
 
-4.For viewing all the data use the scrollbar and add the searched medicines to the cart .
-
-![image](https://github.com/user-attachments/assets/5343b9d6-c3a7-4ed0-afb5-17aceaeda37c)
-
-
-
-
-4. **Dashboard Page**: 
+3. **Dashboard Page**: 
    - Features a search input for finding medicines.
-   - Retrieves and displays medicine data from an external API. For now I have made static to search the medicine and also it will count the medicine when it is searched.
+   - Retrieves and displays medicine data  and gives the count of the searched medicines.
   
-     ![image](https://github.com/user-attachments/assets/131566cb-c8fd-4267-9f80-79e8ed60dfe0)
+    ![image](https://github.com/user-attachments/assets/547d4bb6-c533-4ac7-9297-e07a4ffdf062)
 
-   For now it is static list . But still from this we can calculate the counts of  medicine instock or not.
+    For view all the data of medicine use scrollbar and add the medicines to the cart .
+    ![image](https://github.com/user-attachments/assets/b6d2f555-c3e4-4966-b7dd-683668031e30)
 
-   ![image](https://github.com/user-attachments/assets/f6334dae-8645-498d-b72c-d363362df155)
+  After adding medicines to the cart , inrcease the quantity of the medicines and proceed to checkout.
+
+   ![image](https://github.com/user-attachments/assets/a942f833-d29c-456e-8c2c-bbcf2b3c3801)
 
 
 6. **Checkout Page**: 
