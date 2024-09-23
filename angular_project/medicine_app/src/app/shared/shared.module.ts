@@ -7,7 +7,7 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
 import { PageFooterComponent } from './components/page-footer/page-footer.component';
 import { PageSideNavBarComponent } from './components/page-side-nav-bar/page-side-nav-bar.component';
 ;
-import player from 'lottie-web';
+
 
 @NgModule({
   declarations: [
