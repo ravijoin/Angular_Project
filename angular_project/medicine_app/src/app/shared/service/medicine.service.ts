@@ -2,29 +2,45 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MedicineService {
-  private apiUrlSearch = 'https://api.evitalrx.in/v1/fulfillment/medicines/search';
-  private apiUrlProduct = 'https://api.evitalrx.in/v1/fulfillment/medicines/view';
+  private apiUrlProduct = 'https://dev-api.evitalrx.in/v1/fulfillment/medicines/view';
+  private apiUrlSearch = 'https://dev-api.evitalrx.in/v1/fulfillment/medicines/search';
   private apikey = 'wFIMP75eG1sQEh8vVAdXykgzF4mLhDw3'; // Your API key
 
   constructor(private http: HttpClient) {}
 
+  getMedicineById(payload: { apikey: any, medicine_ids: string[],medicine_id:any }): Observable<any> {
+
+
+    // Sending the POST request with the body
+    return this.http.post<any>(this.apiUrlProduct, payload).pipe(
+      map(response => {
+        return response;  // Optionally process the response here
+      }),
+      catchError(error => {
+        console.error('Error fetching medicines:', error);
+        throw error;
+      })
+    );
+  }
+
   // Method to get medicines from API
   searchMedicines(searchQuery: string): Observable<any> {
-    const queryParams = {
+    const body = {
       apikey: this.apikey,
       searchstring: searchQuery // Ensure the parameter name matches what the API expects
     };
-    return this.http.post<any>(this.apiUrlSearch, { params: queryParams })
+    return this.http.post<any>(this.apiUrlSearch,body)
       .pipe(
         catchError(this.handleError)
       );
   }
+
 
 
   placeOrder(orderData: any): Observable<any> {

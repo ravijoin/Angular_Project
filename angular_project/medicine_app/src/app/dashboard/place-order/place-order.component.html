@@ -1,136 +1,188 @@
 <div class="order-form">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Place Order</mat-card-title>
-    </mat-card-header>
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Place Order</mat-card-title>
+      </mat-card-header>
 
-    <mat-card-content>
-      <mat-grid-list
-        cols="2"
-        rowHeight="100px"
-        gutterSize="10px"
-        [formGroup]="orderForm"
-      >
-        <mat-grid-tile colspan="2">
-          <mat-form-field color="accent">
-            <mat-label>Patient ID</mat-label>
-            <input matInput formControlName="patient_id" />
-            <mat-error
-              *ngIf="orderForm.get('patient_id')?.hasError('required')"
-            >
-              Patient ID is required!
-            </mat-error>
-          </mat-form-field>
-        </mat-grid-tile>
+      <mat-card-content>
+        <mat-grid-list cols="2" rowHeight="100px" gutterSize="10px">
+          <!-- Patient Name -->
+          <mat-grid-tile colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>Patient Name</mat-label>
+              <input matInput formControlName="patient_name" required />
+              <mat-error *ngIf="orderForm.get('patient_name')?.hasError('required')">
+                Patient Name is required!
+              </mat-error>
+              <mat-error *ngIf="orderForm.get('patient_name')?.hasError('pattern')">
+                Patient Name cannot be a number!
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
 
-        <mat-grid-tile colspan="2">
-          <mat-form-field color="accent">
-            <mat-label>Mobile</mat-label>
-            <input matInput formControlName="mobile" />
-            <mat-error *ngIf="orderForm.get('mobile')?.hasError('required')">
-              Mobile number is required!
-            </mat-error>
-            <mat-error *ngIf="orderForm.get('mobile')?.hasError('pattern')">
-              Must be a valid mobile number.
-            </mat-error>
-          </mat-form-field>
-        </mat-grid-tile>
+          <!-- Mobile -->
+          <mat-grid-tile colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>Mobile</mat-label>
+              <input matInput formControlName="mobile" type="tel" required />
+              <mat-error *ngIf="orderForm.get('mobile')?.hasError('required')">
+                Mobile number is required!
+              </mat-error>
+              <mat-error *ngIf="orderForm.get('mobile')?.hasError('pattern')">
+                Must be a valid mobile number (10 digits).
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
 
-        <mat-grid-tile colspan="2">
-          <mat-form-field color="accent">
-            <mat-label>Delivery Type</mat-label>
-            <mat-select formControlName="delivery_type">
-              <mat-option value="pickup">Pickup</mat-option>
-              <mat-option value="delivery">Delivery</mat-option>
-            </mat-select>
-            <mat-error
-              *ngIf="orderForm.get('delivery_type')?.hasError('required')"
-            >
-              Delivery type is required!
-            </mat-error>
-          </mat-form-field>
-        </mat-grid-tile>
+          <!-- Delivery Type -->
+          <mat-grid-tile colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>Delivery Type</mat-label>
+              <mat-select formControlName="delivery_type" required>
+                <mat-option value="pickup">Pickup</mat-option>
+                <mat-option value="delivery">Delivery</mat-option>
+              </mat-select>
+              <mat-error *ngIf="orderForm.get('delivery_type')?.hasError('required')">
+                Delivery type is required!
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
 
-        <mat-grid-tile
-          *ngIf="orderForm.get('delivery_type')?.value === 'delivery'"
-          colspan="2"
-        >
-          <mat-form-field color="accent">
-            <mat-label>Address</mat-label>
-            <input matInput formControlName="address" />
-            <mat-error *ngIf="orderForm.get('address')?.hasError('required')">
-              Address is required for delivery!
-            </mat-error>
-          </mat-form-field>
-        </mat-grid-tile>
+          <!-- Address -->
+          <mat-grid-tile *ngIf="orderForm.get('delivery_type')?.value === 'delivery'" colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="address" required />
+              <mat-error *ngIf="orderForm.get('address')?.hasError('required')">
+                Address is required for delivery!
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
 
-        <mat-grid-tile
-          *ngIf="orderForm.get('delivery_type')?.value === 'delivery'"
-          colspan="1"
-        >
-          <mat-form-field color="accent">
-            <mat-label>City</mat-label>
-            <input matInput formControlName="city" />
-            <mat-error *ngIf="orderForm.get('city')?.hasError('required')">
-              City is required!
-            </mat-error>
-          </mat-form-field>
-        </mat-grid-tile>
+          <!-- City -->
+          <mat-grid-tile colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city" required />
+              <mat-error *ngIf="orderForm.get('city')?.hasError('required')">
+                City is required!
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
 
-        <mat-grid-tile colspan="1">
-          <mat-form-field color="accent">
-            <mat-label>State</mat-label>
-            <input matInput formControlName="state" />
-            <mat-error *ngIf="orderForm.get('state')?.hasError('required')">
-              State is required!
-            </mat-error>
-          </mat-form-field>
-        </mat-grid-tile>
+          <!-- State -->
+          <mat-grid-tile colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>State</mat-label>
+              <input matInput formControlName="state" required />
+              <mat-error *ngIf="orderForm.get('state')?.hasError('required')">
+                State is required!
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
 
-        <mat-grid-tile colspan="2">
-          <mat-form-field color="accent">
-            <mat-label>Zipcode</mat-label>
-            <input matInput formControlName="zipcode" />
-            <mat-error *ngIf="orderForm.get('zipcode')?.hasError('required')">
-              Zipcode is required!
-            </mat-error>
-            <mat-error *ngIf="orderForm.get('zipcode')?.hasError('pattern')">
-              Must be a valid zipcode!
-            </mat-error>
-          </mat-form-field>
-        </mat-grid-tile>
+          <!-- Zipcode -->
+          <mat-grid-tile colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>Zipcode</mat-label>
+              <input matInput formControlName="zipcode" required />
+              <mat-error *ngIf="orderForm.get('zipcode')?.hasError('required')">
+                Zipcode is required!
+              </mat-error>
+              <mat-error *ngIf="orderForm.get('zipcode')?.hasError('pattern')">
+               Please enter valid zipcode!
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
 
-        <div formArrayName="items">
-          <div
-            *ngFor="let item of items.controls; let i = index"
-            [formGroupName]="i"
-          >
-            <!-- Medicine ID Field -->
-            <mat-grid-tile colspan="1">
-              <mat-form-field color="accent">
-                <mat-label>Medicine ID</mat-label>
-                <input matInput formControlName="medicine_id" />
-              </mat-form-field>
-            </mat-grid-tile>
+          <!-- Latitude -->
+          <mat-grid-tile colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>Latitude</mat-label>
+              <input matInput formControlName="latitude" />
+            </mat-form-field>
+          </mat-grid-tile>
 
-            <!-- Quantity Field -->
-            <mat-grid-tile colspan="1">
-              <mat-form-field color="accent">
-                <mat-label>Quantity</mat-label>
-                <input matInput formControlName="quantity" type="number" />
-              </mat-form-field>
-            </mat-grid-tile>
+          <!-- Longitude -->
+          <mat-grid-tile colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>Longitude</mat-label>
+              <input matInput formControlName="longitude" />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <!-- Chemist ID -->
+          <mat-grid-tile colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>Chemist ID</mat-label>
+              <input matInput formControlName="chemist_id" required />
+              <mat-error *ngIf="orderForm.get('chemist_id')?.hasError('required')">
+                Chemist ID is required!
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <!-- Auto Assign -->
+          <mat-grid-tile colspan="2">
+            <mat-form-field appearance="fill">
+              <mat-label>Auto Assign</mat-label>
+              <mat-select formControlName="auto_assign">
+                <mat-option [value]="true">Yes</mat-option>
+                <mat-option [value]="false">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <!-- Items Array -->
+          <div formArrayName="items">
+            <div *ngFor="let item of items.controls; index as i" [formGroupName]="i">
+              <!-- Medicine ID -->
+              <mat-grid-tile colspan="1">
+                <mat-form-field appearance="fill">
+                  <mat-label>Medicine ID</mat-label>
+                  <input matInput formControlName="medicine_id" required />
+                  <mat-error *ngIf="item.get('medicine_id')?.hasError('required')">
+                    Medicine ID is required!
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+
+              <!-- Quantity -->
+              <mat-grid-tile colspan="1">
+                <mat-form-field appearance="fill">
+                  <mat-label>Quantity</mat-label>
+                  <input matInput type="number" formControlName="quantity" min="1" required />
+                  <mat-error *ngIf="item.get('quantity')?.hasError('required')">
+                    Quantity is required!
+                  </mat-error>
+                  <mat-error *ngIf="item.get('quantity')?.hasError('min')">
+                    Quantity must be at least 1.
+                  </mat-error>
+                </mat-form-field>
+              </mat-grid-tile>
+
+              <!-- Buttons for Add/Remove -->
+              <mat-grid-tile colspan="2">
+                <button mat-raised-button color="primary" type="button" (click)="addItem()">
+                  Add Another Medicine
+                </button>
+                <button mat-raised-button color="warn" type="button" (click)="removeItem(i)" *ngIf="items.length > 1">
+                  Remove Medicine
+                </button>
+              </mat-grid-tile>
+            </div>
           </div>
-        </div>
-      </mat-grid-list>
-    </mat-card-content>
+        </mat-grid-list>
+      </mat-card-content>
 
-    <mat-card-actions>
-      <button mat-raised-button color="accent" type="submit">
-        Place Order
-      </button>
-    </mat-card-actions>
-  </mat-card>
+      <mat-card-actions>
+        <button mat-raised-button color="accent" type="submit">
+          Place Order
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
 </div>
 
 <div class="order-info">

@@ -3,7 +3,6 @@ mat-sidenav-container {
 
   mat-sidenav {
     width: 255px;
-
   }
 
   mat-sidenav-content {
@@ -11,8 +10,20 @@ mat-sidenav-container {
     flex-direction: column;
 
     main {
-        padding: 1rem;
+      padding: 1rem;
       flex: 1 1 auto;
     }
   }
+  .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 28px;
+    z-index: 100;
+    background-color: #673ab7;
+    color: white;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+
+
 }

@@ -1,26 +1,12 @@
 <mat-form-field color="accent" appearance="outline">
-  <mat-label>Search Medicines</mat-label>
-  <input
-    matInput
-    (input)="searchMedicines(searchField.value)"
-    #searchField
-    placeholder="Enter medicine name"
-  />
-  <!-- <pre>{{ medicinesToDisplay | json }}</pre>  -->
-  <button mat-icon-button matSuffix>
+  <mat-label>Enter Order ID</mat-label>
+  <input matInput (input)="viewOrderById(orderIdField.value)" #orderIdField placeholder="Order ID" />
+  <button mat-icon-button matSuffix (click)="viewOrderById(orderIdField.value)">
     <mat-icon>search</mat-icon>
   </button>
 </mat-form-field>
-<!-- Button for Viewing Medicine by ID -->
-<div style="text-align: right; bottom: 4rem;position: relative;">
-  <button mat-raised-button color="primary" (click)="viewMedicineById()">
-    View Medicine By ID
-  </button>
 
-</div>
-
-
-
+<pre>{{ ordersToDisplay | json }}</pre>
 
 <mat-card *ngIf="loading">
   <mat-card-content>
@@ -44,8 +30,72 @@
   </mat-card-content>
 </mat-card>
 
-<mat-accordion multi="true" *ngIf="!loading && getMedicineCount() > 0">
-  <ng-container *ngFor="let item of medicinesToDisplay">
+
+<div *ngIf="!loading && getMedicineCount() > 0">
+  <ng-container *ngFor="let item of ordersToDisplay">
+    <mat-card class="medicine-card">
+      <mat-card-header>
+        <mat-card-title>{{ item.id }}</mat-card-title>
+        <mat-card-subtitle>{{ item.order_number }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Price:</strong> {{ item.id }}</p>
+        <p><strong>Price:</strong> {{ item.order_number }}</p>
+
+        <p><strong>Price:</strong> {{ item.amount }}</p>
+        <p><strong>Price:</strong> {{ item.discount }}</p>
+
+        <p><strong>Price:</strong> {{ item.total }}</p>
+        <p><strong>Price:</strong> {{ item.address_name }}</p>
+
+        <p><strong>Price:</strong> {{ item.address }}</p>
+        <p><strong>Price:</strong> {{ item.address_line2 }}</p>
+
+        <p><strong>Price:</strong> {{ item.city }}</p>
+        <p><strong>Price:</strong> {{ item.state }}</p>
+
+        <p><strong>Price:</strong> {{ item.zipcode }}</p>
+        <p><strong>Price:</strong> {{ item.order_status }}</p>
+
+        <p><strong>Price:</strong> {{ item.created_date }}</p>
+        <p><strong>Price:</strong> {{ item.order_delivery_datetime }}</p>
+
+        <p><strong>Price:</strong> {{ item.pharmacy_name }}</p>
+        <p><strong>Price:</strong> {{ item.chemist_mobile }}</p>
+
+        <p><strong>Price:</strong> {{ item.chemist_address }}</p>
+        <p><strong>Price:</strong> {{ item.chemist_city }}</p>
+
+        <p><strong>Price:</strong> {{ item.chemist_latitude }}</p>
+        <p><strong>Price:</strong> {{ item.chemist_longitude }}</p>
+
+        <p><strong>Price:</strong> {{ item.chemist_state }}</p>
+        <p><strong>Price:</strong> {{ item.chemist_zipcode }}</p>
+
+        <p><strong>Price:</strong> {{ item.order_patient_name }}</p>
+        <p><strong>Price:</strong> {{ item.pharmacist_name }}</p>
+
+        <p><strong>Price:</strong> {{ item.delivery_note }}</p>
+        <p><strong>Price:</strong> {{ item.payment_status }}</p>
+
+        <p><strong>Price:</strong> {{ item.patient_id }}</p>
+        <p><strong>Price:</strong> {{ item.delivery_pin }}</p>
+
+        <p><strong>Price:</strong> {{ item.payment_ref_id }}</p>
+        <p><strong>Price:</strong> {{ item.medicine_details }}</p>
+
+        <p><strong>Price:</strong> {{ item.prescription_details }}</p>
+        <p><strong>Price:</strong> {{ item.payment_url }}</p>
+
+
+
+        <p><strong>Available:</strong> {{ item.order_status ? "Not Available" : "Available" }}</p>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>
+<!-- <mat-accordion multi="true" *ngIf="!loading && getMedicineCount() > 0">
+  <ng-container *ngFor="let item of ordersToDisplay">
 
 
 
@@ -55,18 +105,8 @@
 
           {{ item.medicine_name }}
         </mat-panel-title>
-        <!-- <button class="btn-checkout"
-        mat-raised-button
-        color="primary"
-        [disabled]="item.ordered"
-        (click)="checkout(item)"
-      >
-        Order
-      </button> -->
 
       </mat-expansion-panel-header>
-       <!-- Horizontal Scrollable Table -->
-       <div style="overflow-x: auto; white-space: nowrap;">
 
       <table mat-table [dataSource]="[item]" class="mat-elevation-z8">
         <ng-container matColumnDef="dosage_type">
@@ -75,12 +115,12 @@
         </ng-container>
 
         <ng-container matColumnDef="medicine_name">
-          <th mat-header-cell *matHeaderCellDef>medicine_name</th>
+          <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let element">{{ element.medicine_name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="content">
-          <th mat-header-cell *matHeaderCellDef>content</th>
+          <th mat-header-cell *matHeaderCellDef>Price</th>
           <td mat-cell *matCellDef="let element">{{ element.content }}</td>
         </ng-container>
         <ng-container matColumnDef="mrp">
@@ -88,7 +128,7 @@
           <td mat-cell *matCellDef="let element">{{ element.mrp }}</td>
         </ng-container>
         <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef>price</th>
+          <th mat-header-cell *matHeaderCellDef>Price</th>
           <td mat-cell *matCellDef="let element">{{ element.price }}</td>
         </ng-container>
         <ng-container matColumnDef="medicine_id">
@@ -108,39 +148,38 @@
           <td mat-cell *matCellDef="let element">{{ element.manufacturer_name }}</td>
         </ng-container>
         <ng-container matColumnDef="medicine_type">
-          <th mat-header-cell *matHeaderCellDef>medicine_type</th>
+          <th mat-header-cell *matHeaderCellDef>medicine_id</th>
           <td mat-cell *matCellDef="let element">{{ element.medicine_type }}</td>
         </ng-container>
         <ng-container matColumnDef="gst_percentage">
-          <th mat-header-cell *matHeaderCellDef>gst_percentage</th>
+          <th mat-header-cell *matHeaderCellDef>Price</th>
           <td mat-cell *matCellDef="let element">{{ element.gst_percentage }}</td>
         </ng-container>
         <ng-container matColumnDef="available_for_patient">
-          <th mat-header-cell *matHeaderCellDef>available_for_patient</th>
+          <th mat-header-cell *matHeaderCellDef>Price</th>
           <td mat-cell *matCellDef="let element">{{ element.available_for_patient }}</td>
         </ng-container>
         <ng-container matColumnDef="discontinued">
-          <th mat-header-cell *matHeaderCellDef>discontinued</th>
+          <th mat-header-cell *matHeaderCellDef>Price</th>
           <td mat-cell *matCellDef="let element">{{ element.discontinued }}</td>
         </ng-container>
 
         <ng-container matColumnDef="available">
           <th mat-header-cell *matHeaderCellDef>Availability</th>
           <td mat-cell *matCellDef="let element">
-            {{ element.available_for_patient ? "Not Available" : "Available" }}
+            {{ element.ordered ? "Not Available" : "Available" }}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="add_to_cart">
-          <th mat-header-cell *matHeaderCellDef>Add to Cart</th>
+        <ng-container matColumnDef="order">
+          <th mat-header-cell *matHeaderCellDef>Order</th>
           <td mat-cell *matCellDef="let element">
             <button
               mat-raised-button
               color="primary"
-
-              (click)="addToCart(element)"
+              [disabled]="element.ordered"
             >
-              Add cart
+              Order
             </button>
           </td>
         </ng-container>
@@ -148,7 +187,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
-      </div>
     </mat-expansion-panel>
   </ng-container>
-</mat-accordion>
+</mat-accordion> -->

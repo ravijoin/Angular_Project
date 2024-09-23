@@ -10,8 +10,8 @@ export interface User {
 }
 
 export interface RegisterResponse {
-  token: string;
-  message?: string; // Optional property if the response contains a message
+  status_code:any,
+  status_message:string,
 
 }
 export enum AccountStatus {

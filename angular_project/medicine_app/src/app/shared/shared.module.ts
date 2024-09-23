@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { PageFooterComponent } from './components/page-footer/page-footer.component';
 import { PageSideNavBarComponent } from './components/page-side-nav-bar/page-side-nav-bar.component';
+;
+import player from 'lottie-web';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,13 @@ import { PageSideNavBarComponent } from './components/page-side-nav-bar/page-sid
     PageFooterComponent,
     PageSideNavBarComponent,
   ],
-  imports: [CommonModule, MaterialModule, RouterModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    RouterModule,
+    ReactiveFormsModule,
+
+  ],
   exports: [
     CommonModule,
     MaterialModule,
@@ -22,6 +30,7 @@ import { PageSideNavBarComponent } from './components/page-side-nav-bar/page-sid
     PageSideNavBarComponent,
     RouterModule,
     ReactiveFormsModule,
+
   ],
 })
 export class SharedModule {}

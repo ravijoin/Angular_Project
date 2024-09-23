@@ -6,7 +6,7 @@
 
     <mat-card-content [formGroup]="loginForm">
       <mat-form-field color="accent">
-        <mat-label>mobile</mat-label>
+        <mat-label>Mobile</mat-label>
         <input matInput formControlName="mobile">
         <mat-error *ngIf="loginForm.get('mobile')?.hasError('required')">
           Mobile number is required!
@@ -15,20 +15,18 @@
           Invalid mobile number! Must be 10 digits.
         </mat-error>
       </mat-form-field>
+
       <mat-form-field color="accent">
-        <mat-label>patient_id</mat-label>
+        <mat-label>Patient ID</mat-label>
         <input matInput formControlName="patient_id">
         <mat-error *ngIf="loginForm.get('patient_id')?.hasError('required')">
           Patient ID is required!
-        </mat-error>
-        <mat-error *ngIf="loginForm.get('patient_id')?.hasError('pattern')">
-          Invalid Patient ID! Must be alphanumeric, 6 to 12 characters.
         </mat-error>
       </mat-form-field>
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-raised-button color="accent" routerLink="/dashboard"(click)="login()">Login</button>
+      <button mat-raised-button color="accent" (click)="login()" [disabled]="!loginForm.valid">Login</button>
     </mat-card-actions>
 
     <mat-card-actions>
@@ -37,5 +35,5 @@
     </mat-card-actions>
   </mat-card>
 
-  <img src="../../../../assets/medicine_app.png" alt="Description of image" class="login-image">
+  <img src="../../../assets/medicine_app.png" alt="Description of image" class="login-image">
 </div>

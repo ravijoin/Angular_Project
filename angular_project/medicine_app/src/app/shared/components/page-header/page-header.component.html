@@ -1,18 +1,19 @@
 <mat-toolbar color="primary">
   <span>Equality Healthcare</span>
   <span class="spacer"></span>
-  <mat-slide-toggle
-    color="accent"
-    [checked]="isDark"
-    (change)="setTheme($event.checked)"
-  >
-    Dark Mode
-  </mat-slide-toggle>
+  <mat-slide-toggle color="accent" [checked]="isDark" (change)="setTheme($event.checked)">Dark Mode</mat-slide-toggle>
 
   <div class="user-info">
-    @if (loggedIn) {
-    <div class="name">Hi, Naman Jain</div>
-    }
-    <button mat-raised-button color="warn" (click)="logout()">Log Out</button>
+    <ng-container *ngIf="isLoggedIn(); else loggedOutTemplate">
+      <div class="name" style="margin-left:6px ;">Hi, {{ getUsername() }}</div>
+      <button mat-raised-button color="warn" (click)="logout()">Log Out</button>
+    </ng-container>
+    <ng-template #loggedOutTemplate>
+      <button mat-raised-button color="accent" routerLink="/login">Log In</button>
+    </ng-template>
+
+    <button mat-raised-button color="accent" routerLink="/dashboard/view-cart">
+      View Cart ({{ cartService.getCartItems().length }})
+    </button>
   </div>
 </mat-toolbar>

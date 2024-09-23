@@ -1,0 +1,209 @@
+<mat-form-field color="accent" appearance="outline">
+  <mat-label>Enter Medicine ID</mat-label>
+  <input matInput (input)="viewMedicineById(medicineIdField.value)" #medicineIdField placeholder="Medicine ID" />
+  <button mat-icon-button matSuffix (click)="viewMedicineById(medicineIdField.value)">
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-form-field>
+<!-- <pre>{{ medicinesToDisplay | json }}</pre> -->
+
+<mat-card *ngIf="loading">
+  <mat-card-content>
+    <mat-spinner></mat-spinner> Searching for medicines...
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="!loading && getMedicineCount() > 0">
+  <mat-card-content>
+    Showing {{ getMedicineCount() }} Medicines.
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="!loading && getMedicineCount() === 0">
+  <mat-card-content> No medicines found. </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="errorMessage">
+  <mat-card-content>
+    <span style="color: red">{{ errorMessage }}</span>
+  </mat-card-content>
+</mat-card>
+
+<mat-accordion multi="true" *ngIf="!loading && getMedicineCount() > 0">
+  <ng-container *ngFor="let item of medicinesToDisplay">
+
+
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+
+          {{ item.medicine_name }}
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+
+          <!-- Horizontal Scrollable Table -->
+          <div style="overflow-x: auto; white-space: nowrap;">
+
+
+      <table mat-table [dataSource]="[item]" class="mat-elevation-z8">
+        <ng-container matColumnDef="dosage_type">
+          <th mat-header-cell *matHeaderCellDef>dosage_type</th>
+          <td mat-cell *matCellDef="let element">{{ element.dosage_type }}</td>
+        </ng-container>
+        <ng-container matColumnDef="how_medicine_works">
+          <th mat-header-cell *matHeaderCellDef>how_medicine_works</th>
+          <td mat-cell *matCellDef="let element">{{ element.how_medicine_works }}</td>
+        </ng-container>
+        <ng-container matColumnDef="how_to_use">
+          <th mat-header-cell *matHeaderCellDef>how_to_use</th>
+          <td mat-cell *matCellDef="let element">{{ element.how_to_use }}</td>
+        </ng-container>
+        <ng-container matColumnDef="is_rx_required">
+          <th mat-header-cell *matHeaderCellDef>is_rx_required</th>
+          <td mat-cell *matCellDef="let element">{{ element.is_rx_required }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="medicine_name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.medicine_name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="content">
+          <th mat-header-cell *matHeaderCellDef>content</th>
+          <td mat-cell *matCellDef="let element">{{ element.content }}</td>
+        </ng-container>
+        <ng-container matColumnDef="mrp">
+          <th mat-header-cell *matHeaderCellDef>mrp</th>
+          <td mat-cell *matCellDef="let element">{{ element.mrp }}</td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+        </ng-container>
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>id</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+        <ng-container matColumnDef="packing_size">
+          <th mat-header-cell *matHeaderCellDef>packing_size</th>
+          <td mat-cell *matCellDef="let element">{{ element.packing_size }}</td>
+        </ng-container>
+        <ng-container matColumnDef="packing">
+          <th mat-header-cell *matHeaderCellDef>packing</th>
+          <td mat-cell *matCellDef="let element">{{ element.packing }}</td>
+        </ng-container>
+        <ng-container matColumnDef="medicine_image">
+          <th mat-header-cell *matHeaderCellDef>medicine_image</th>
+          <td mat-cell *matCellDef="let element">{{ element.medicine_image }}</td>
+        </ng-container>
+        <ng-container matColumnDef="size">
+          <th mat-header-cell *matHeaderCellDef>size</th>
+          <td mat-cell *matCellDef="let element">{{ element.size }}</td>
+        </ng-container>
+        <ng-container matColumnDef="manufacturer_name">
+          <th mat-header-cell *matHeaderCellDef>manufacturer_name</th>
+          <td mat-cell *matCellDef="let element">{{ element.manufacturer_name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="alcohol">
+          <th mat-header-cell *matHeaderCellDef>alcohol</th>
+          <td mat-cell *matCellDef="let element">{{ element.alcohol }}</td>
+        </ng-container>
+        <ng-container matColumnDef="kidney">
+          <th mat-header-cell *matHeaderCellDef>kidney</th>
+          <td mat-cell *matCellDef="let element">{{ element.kidney }}</td>
+        </ng-container>
+        <ng-container matColumnDef="driving">
+          <th mat-header-cell *matHeaderCellDef>driving</th>
+          <td mat-cell *matCellDef="let element">{{ element.driving }}</td>
+        </ng-container>
+        <ng-container matColumnDef="side_effects">
+          <th mat-header-cell *matHeaderCellDef>side_effects</th>
+          <td mat-cell *matCellDef="let element">{{ element.side_effects }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="liver">
+          <th mat-header-cell *matHeaderCellDef>liver</th>
+          <td mat-cell *matCellDef="let element">{{ element.liver }}</td>
+        </ng-container>
+        <ng-container matColumnDef="lactation">
+          <th mat-header-cell *matHeaderCellDef>lactation</th>
+          <td mat-cell *matCellDef="let element">{{ element.lactation }}</td>
+        </ng-container>
+        <ng-container matColumnDef="pregnancy">
+          <th mat-header-cell *matHeaderCellDef>pregnancy</th>
+          <td mat-cell *matCellDef="let element">{{ element.pregnancy }}</td>
+        </ng-container>
+        <ng-container matColumnDef="medicine_category">
+          <th mat-header-cell *matHeaderCellDef>medicine_category</th>
+          <td mat-cell *matCellDef="let element">{{ element.medicine_category }}</td>
+        </ng-container>
+        <ng-container matColumnDef="gst_percentage">
+          <th mat-header-cell *matHeaderCellDef>gst_percentage</th>
+          <td mat-cell *matCellDef="let element">{{ element.gst_percentage }}</td>
+        </ng-container>
+        <ng-container matColumnDef="salt_content_id">
+          <th mat-header-cell *matHeaderCellDef>salt_content_id</th>
+          <td mat-cell *matCellDef="let element">{{ element.salt_content_id }}</td>
+        </ng-container>
+        <ng-container matColumnDef="alternative_results">
+          <th mat-header-cell *matHeaderCellDef>Alternative Results</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.alternative_results.in_stock_count as count">
+              In stock count: {{ count }}
+            </div>
+            <div *ngIf="element.alternative_results.results && element.alternative_results.results.length > 0">
+              <ul>
+                <li *ngFor="let alt of element.alternative_results.results">
+                  {{ alt.name }} - {{ alt.detail }}
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="!element.alternative_results.results || element.alternative_results.results.length === 0">
+              No alternatives found.
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="thumb_medicine_image">
+          <th mat-header-cell *matHeaderCellDef>thumb_medicine_image</th>
+          <td mat-cell *matCellDef="let element">{{ element.thumb_medicine_image }}</td>
+        </ng-container>
+        <ng-container matColumnDef="medicine_images">
+          <th mat-header-cell *matHeaderCellDef>Medicine Images</th>
+          <td mat-cell *matCellDef="let element">
+            <img *ngFor="let img of element.medicine_images" [src]="img.url" alt="Medicine Image" style="width: 50px; height: auto;">
+          </td>
+        </ng-container>
+
+
+
+        <ng-container matColumnDef="available">
+          <th mat-header-cell *matHeaderCellDef>Availability</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.ordered ? "Not Available" : "Available" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="order">
+          <th mat-header-cell *matHeaderCellDef>Order</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="element.ordered"
+              (click)="addToCart(element)"
+            >
+              Order
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+          </div>
+    </mat-expansion-panel>
+  </ng-container>
+</mat-accordion>

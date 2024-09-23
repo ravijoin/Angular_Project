@@ -1,0 +1,42 @@
+.cart-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+.cart-summary button{
+  position: relative;
+  left:2rem ;
+}
+
+table {
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  justify-content: flex-start; /* Aligns items to the start */
+  align-items: center;
+  position: relative; /* Set position relative to position child elements */
+}
+
+.search-button {
+  position: relative;
+    // top: 0.5rem;
+    bottom: 0.5rem;
+    left: 60rem;
+}
+
+/* Optional: Media query for smaller screens */
+@media (max-width: 600px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-button {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+}
+

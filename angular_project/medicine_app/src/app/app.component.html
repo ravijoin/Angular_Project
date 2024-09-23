@@ -4,14 +4,20 @@
     <app-page-side-nav-bar></app-page-side-nav-bar>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content #matSidenavContent>
 
-  <app-page-header></app-page-header>
-      <main>
-          <router-outlet></router-outlet>
-      </main>
+    <app-page-header></app-page-header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
 
-      <app-page-footer></app-page-footer>
+    <app-page-footer></app-page-footer>
+
+    <!-- Scroll-to-Top Button -->
+    <button *ngIf="showScrollToTop" mat-fab class="scroll-to-top" (click)="scrollToTop()">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+
   </mat-sidenav-content>
 
 </mat-sidenav-container>

@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 // import { patientService } from '../../shared/service/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PatientService } from '../../shared/service/patient.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -16,12 +22,16 @@ export class LoginComponent {
   constructor(
     fb: FormBuilder,
     private patientService: PatientService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router // Inject the Router service
   ) {
-    this.loginForm = fb.group({
-      mobile: ['', [Validators.pattern('^[0-9]{10}$')]], // Mobile number pattern
-      patient_id: ['', [Validators.pattern('^[A-Z0-9]{6,12}$')]] // Alphanumeric patient ID pattern
-    }, { validators: this.atLeastOneRequiredValidator }); // Custom validator
+    this.loginForm = fb.group(
+      {
+        mobile: ['', [Validators.pattern('^[0-9]{10}$')]], // Mobile number pattern for exactly 10 digits
+        patient_id: ['', [Validators.pattern('^[A-Za-z0-9=]+$')]], // Alphanumeric pattern with support for '='
+      },
+      { validators: this.atLeastOneRequiredValidator }
+    ); // Custom validator
   }
   // Custom validator to check if at least one field is filled
   atLeastOneRequiredValidator(control: AbstractControl) {
@@ -34,35 +44,46 @@ export class LoginComponent {
     return null;
   }
 
-
   login() {
-    let loginInfo = {
-      mobile: this.loginForm.get('mobile')?.value,
-      patient_id: this.loginForm.get('patient_id')?.value,
-    };
+    if (this.loginForm.valid) {
+      const mobile = this.loginForm.get('mobile')?.value;
+      const patient_id = this.loginForm.get('patient_id')?.value;
 
-    this.patientService.getPatientDetails(loginInfo.mobile, loginInfo.patient_id).subscribe({
-      next: (res: any) => {
-        console.log('API Response:', res); // Log the response to see its structure
+      // Debugging - check the form values
+      console.log('Form values:', { mobile, patient_id });
 
-        if (res.token) {
-          localStorage.setItem('access_token', res.token);
-          localStorage.setItem('user', JSON.stringify(res.user)); // Ensure `res.user` is set if available
-          this.patientService.userStatus.next('loggedIn');
-
-        // Show success snackbar
-        this.snackBar.open('Logged in successfully!', 'OK', { duration: 2000 });
-        }
-
-      },
-      error: (error) => {
-        console.error('Login error:', error);
-        this.snackBar.open('Failed to login. Please try again.', 'OK',{ duration: 2000 });
-      }
+        // Check if both fields are filled
+    if (mobile && patient_id) {
+      this.snackBar.open('Please provide only one field: mobile or patient ID.', 'OK', {
+        duration: 4000,
+      });
+      return; // Exit the function early
     }
 
-  );
+      // Make API call
+      this.patientService.getPatientDetails(patient_id, mobile).subscribe({
+        next: (response) => {
+          if (response.status_message) {
+            this.snackBar.open(response.status_message, 'OK', {
+              duration: 4000,
+            });
+
+            // If the login is successful, store the API key in localStorage
+            this.patientService.storeApiKey('wFIMP75eG1sQEh8vVAdXykgzF4mLhDw3'); // Store API key
+
+            // Navigate to the dashboard after successful login
+            this.router.navigate(['/dashboard/search-medicine']);
+          }
+        },
+        error: (error) => {
+          console.error('Error:', error);
+          this.snackBar.open(error.message, 'OK', { duration: 4000 });
+        },
+      });
+    } else {
+      this.snackBar.open('Please fill the form correctly.', 'OK', {
+        duration: 4000,
+      });
+    }
   }
-
-
 }

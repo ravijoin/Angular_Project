@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MedicineService } from '../../shared/service/medicine.service';
+import { OrderService } from '../../shared/service/order.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { CartService } from '../../shared/service/cart.service';
 
 @Component({
   selector: 'app-place-order',
@@ -9,31 +13,35 @@ import { MedicineService } from '../../shared/service/medicine.service';
 })
 export class PlaceOrderComponent {
   orderForm!: FormGroup;
-
+  checkoutItems: any[] = [];
   constructor(
     private fb: FormBuilder,
-    private medicineService: MedicineService
-  ) {}
-
+    private orderService: OrderService,
+    private cartService: CartService,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {
+    this.createForm();
+  }
   ngOnInit(): void {
+    this.loadCheckoutItems();
+  }
+  // Initialize the form group
+  createForm(): void {
     this.orderForm = this.fb.group({
-      patient_id: [''],
-      mobile: [''],
-      apikey: ['your-api-key', Validators.required], // API key (replace with actual value)
-      delivery_type: ['pickup', Validators.required], // Default to 'pickup'
-      address: [''], // Optional
-      address_line2: [''],
+      items: this.fb.array([this.createItem()]), // Create a FormArray for items
+      delivery_type: ['', Validators.required],
+      patient_name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+      mobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      address: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zipcode: ['', Validators.required],
-      items: this.fb.array([]), // Array of items
-      latitude: [''],
-      longitude: [''],
-      full_address: [''], // Required if lat-long is not provided
+      zipcode: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
+      auto_assign: [true],
+      chemist_id: ['', Validators.required],
+      latitude: ['', Validators.pattern(/^-?\d+(\.\d+)?$/)],
+      longitude: ['', Validators.pattern(/^-?\d+(\.\d+)?$/)],
     });
-
-    // Add pre-filled items to the form
-    this.addItemsToOrder();
   }
 
   // Getter for items array
@@ -41,38 +49,107 @@ export class PlaceOrderComponent {
     return this.orderForm.get('items') as FormArray;
   }
 
-  // Add selected medicines to the order form
-  addItemsToOrder() {
-    const medicinesToOrder = [
-      { medicine_id: 'Eli4pMFfzobV63G67jtjZw==', quantity: 2 },
-    ];
-
-    medicinesToOrder.forEach((item) => {
-      this.items.push(
-        this.fb.group({
-          medicine_id: [item.medicine_id, Validators.required],
-          quantity: [item.quantity, [Validators.required, Validators.min(1)]],
-        })
-      );
+  // Create an individual item form group
+  createItem(): FormGroup {
+    return this.fb.group({
+      medicine_id: ['', Validators.required], // Ensure medicine_id is required
+      quantity: [1, [Validators.required, Validators.min(1)]], // Minimum quantity 1
     });
   }
 
-  // Method to submit the order
-  placeOrder() {
-    if (this.orderForm.valid) {
-      const orderData = this.orderForm.value;
-      console.log('Order Data:', orderData);
+  // Add a new item to the array
+  addItem(): void {
+    this.items.push(this.createItem());
+  }
 
-      this.medicineService.placeOrder(orderData).subscribe(
-        (response: any) => {
-          console.log('Order placed successfully', response);
-        },
-        (error: any) => {
-          console.error('Error placing order', error);
-        }
-      );
-    } else {
-      console.log('Form is invalid');
+  // Remove an item from the array
+  removeItem(index: number): void {
+    if (this.items.length > 1) {
+      this.items.removeAt(index);
     }
   }
+
+  // Submit the form data
+  onSubmit(): void {
+    if (this.orderForm.valid) {
+      // Stringify the 'items' array before sending it in the request
+      const formData = { ...this.orderForm.value };
+      formData.items = JSON.stringify(this.orderForm.value.items);
+
+      this.orderService.placeOrder(formData).subscribe({
+        next: (response) => {
+          this.snackBar.open('Order placed successfully!', 'OK', {
+            duration: 4000,
+          });
+          this.cartService.clearCart();  // Clear the cart after successful order
+          console.log('Order placed successfully', response);
+          // You can navigate to another page if needed
+          this.router.navigate(['/dashboard/thankyou']);
+        },
+        error: (error) => {
+          this.snackBar.open('Error placing order. Please try again.', 'OK', {
+            duration: 4000,
+          });
+          console.error('Error placing order', error);
+        },
+      });
+    } else {
+      this.snackBar.open('Please fill the form correctly.', 'OK', {
+        duration: 4000,
+      });
+    }
+  }
+  loadCheckoutItems() {
+    this.checkoutItems = this.orderService.getOrderItems();
+    this.checkoutItems.forEach(item => {
+      this.items.push(this.fb.group({
+
+        medicine_id: [item.medicine_id, Validators.required],
+        quantity: [item.quantity, [Validators.required, Validators.min(1)]]
+      }));
+    });
+  }
+  // Optionally, load initial data if needed
+  // loadOrderData(): void {
+  //   this.orderService.placeOrder(this.orderForm.value).subscribe((data) => {
+  //     this.orderForm.patchValue({
+  //       delivery_type: data.delivery_type,
+  //       patient_name: data.patient_name,
+  //       mobile: data.mobile,
+  //       address: data.address,
+  //       city: data.city,
+  //       state: data.state,
+  //       zipcode: data.zipcode,
+  //       auto_assign: data.auto_assign,
+  //       chemist_id: data.chemist_id,
+  //       latitude: data.latitude,
+  //       longitude: data.longitude,
+  //     });
+
+  //     const itemsFormArray = this.orderForm.get('items') as FormArray;
+
+  //     // Ensure data.items is valid and is an array
+  //     if (data.items && Array.isArray(data.items)) {
+  //       // Remove all current items in the form
+  //       while (itemsFormArray.length) {
+  //         itemsFormArray.removeAt(0);
+  //       }
+
+  //       // Add items from the data received
+  //       data.items.forEach((item: { medicine_id: any; quantity: any }) => {
+  //         itemsFormArray.push(
+  //           this.fb.group({
+  //             medicine_id: [item.medicine_id, Validators.required],
+  //             quantity: [
+  //               item.quantity,
+  //               [Validators.required, Validators.min(1)],
+  //             ],
+  //           })
+  //         );
+  //       });
+  //     } else {
+  //       console.error('Invalid or undefined items data:', data.items);
+  //     }
+  //   });
+  // }
 }

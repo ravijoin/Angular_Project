@@ -1,0 +1,108 @@
+<mat-card>
+  <mat-card-header>
+    <div class="header-content">
+      <mat-card-title>Your Cart</mat-card-title>
+      <button mat-raised-button color="primary" class="search-button" (click)="searchMedicine()">
+        Search Medicine
+      </button>
+    </div>
+  </mat-card-header>
+  <mat-card-content *ngIf="cartItems.length > 0">
+    <!-- Cart Items Form -->
+    <form [formGroup]="form">
+      <table mat-table [dataSource]="cartItems" class="mat-elevation-z8">
+        <!-- Medicine Name Column -->
+        <ng-container matColumnDef="medicine_name">
+          <th mat-header-cell *matHeaderCellDef>Medicine Name</th>
+          <td mat-cell *matCellDef="let item; let i = index">
+            <div formArrayName="items">
+              <div [formGroupName]="i">
+                {{ item.medicine_name }}
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Medicine ID Column -->
+        <ng-container matColumnDef="medicine_id">
+          <th mat-header-cell *matHeaderCellDef>Medicine ID</th>
+          <td mat-cell *matCellDef="let item; let i = index">
+            <div formArrayName="items">
+              <div [formGroupName]="i">
+                {{ item.medicine_id }}
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Quantity Column -->
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let item; let i = index">
+            <div formArrayName="items">
+              <div [formGroupName]="i">
+                <mat-form-field appearance="fill">
+                  <mat-label>Quantity</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="quantity"
+                    (change)="updateQuantity(i)"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let item; let i = index">
+            <div formArrayName="items">
+              <div [formGroupName]="i">
+                ₹{{ item.price }}
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Remove Button Column -->
+        <ng-container matColumnDef="remove">
+          <th mat-header-cell *matHeaderCellDef>Remove</th>
+          <td mat-cell *matCellDef="let item; let i = index">
+            <div formArrayName="items">
+              <div [formGroupName]="i">
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="removeFromCart(i)"
+            >
+              Remove
+            </button>
+              </div>
+              </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['medicine_name', 'medicine_id', 'quantity', 'price', 'remove']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['medicine_name', 'medicine_id', 'quantity', 'price', 'remove']"></tr>
+      </table>
+    </form>
+  </mat-card-content>
+
+  <!-- No Items in Cart -->
+  <mat-card-content *ngIf="cartItems.length === 0">
+    <p>Your cart is empty. Start adding medicines!</p>
+  </mat-card-content>
+
+  <!-- Cart Summary and Checkout -->
+  <mat-card-actions *ngIf="cartItems.length > 0">
+    <div class="cart-summary">
+      <h3>Total: ₹{{ getTotalPrice() }}</h3>
+      <button class="btn-checkout" mat-raised-button color="primary" (click)="checkout()">
+        Proceed to Checkout
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

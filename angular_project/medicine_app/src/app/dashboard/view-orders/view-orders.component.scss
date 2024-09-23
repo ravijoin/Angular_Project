@@ -9,13 +9,6 @@ mat-form-field {
   display: block;
 }
 
-
-mat-expansion-panel-header button {
-right: 1.5rem; /* Add some space between the title and the button */
-}
-
-
-
 mat-card {
   width: max-content;
   margin-bottom: 1rem;
@@ -51,7 +44,4 @@ mat-accordion {
       font-size: 1.2rem;
     }
   }
-  // .btn-checkout{
-  //   margin-right: 2rem;
-  // }
 }
