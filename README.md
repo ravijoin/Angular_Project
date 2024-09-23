@@ -5,11 +5,14 @@ This project is a comprehensive Angular-based web application designed for manag
 
 ## Features
 1. **Landing Page**: 
-   - A fully functional landing page with a header, footer, and side-navigation menu.Unable to make it fully responsive b/c of Api Key.
+   - A fully functional landing page with a header, footer, and side-navigation menu.
    - Provides users with easy access to different sections of the application.
+   - Implemented authenticatiion so that user after successfull login can view the dashboard otherwise not.
+   - Login and Register button will remain disable when form is invalid
   
-     
-![image](https://github.com/user-attachments/assets/380170a6-46a6-431f-b8cf-a9b74774c8f6)
+     ![image](https://github.com/user-attachments/assets/c1c3e291-beb9-4476-a9c1-867a2bb70a0c)
+
+
 
 Fill the registration first if new to the application , all the fileds is having validation so please fill the correct information.
 
