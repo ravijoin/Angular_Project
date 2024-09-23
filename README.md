@@ -18,20 +18,13 @@ Fill the registration first if new to the application , all the fileds is having
 
 2. **Login Page**: 
    - A login form for user authentication.
-   - Currently, the API integration for user authentication is not operational, and further debugging is needed.
-   - Will have 2 panels one is for admin and another is for patient.Admin can see all the users , approve its requests , apply fine on patient if needed.Patient can  order the instock medicines . This placed order is reviewed by the admin and after the aprooval , the email mail message will be send to the store and further delievery of the medicine will take place.
+   -  All the fileds is having validation so please fill the correct information.
+   -  
+     ![image](https://github.com/user-attachments/assets/38779a94-eb35-4a38-99c6-8fe8282f7340)
 
-Fill the Login form if successfully registered .
-
-   ![image](https://github.com/user-attachments/assets/615e5a1c-be15-4445-923d-ddc22f70a003)
-
-   All the fileds is having validation so please fill the correct information.
-
-   ![image](https://github.com/user-attachments/assets/38779a94-eb35-4a38-99c6-8fe8282f7340)
-
-  While logging make sure to provide one value only for fields otherwise it will be looggedin.
+      While logging make sure to provide one value only for fields otherwise it will be looggedin.
    
-   ![image](https://github.com/user-attachments/assets/0e18d8ea-0a36-4255-ad21-a4270e86c97b)
+     ![image](https://github.com/user-attachments/assets/0e18d8ea-0a36-4255-ad21-a4270e86c97b)
 
 3. **Dashboard Page**: 
    - Features a search input for finding medicines.
