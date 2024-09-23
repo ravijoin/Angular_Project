@@ -58,7 +58,7 @@ This project is a comprehensive Angular-based web application designed for manag
      
      ![image](https://github.com/user-attachments/assets/c47924e0-fedf-4eda-913d-fb3e904dfd03)
 
-    After sucessfull ordering , it will navigate thank you page nad the cart will be cleared.
+    After sucessfull ordering , it will navigate to thank you page and the cart will be cleared.
 
     ![image](https://github.com/user-attachments/assets/3bcb7d07-3b64-4548-bfc8-ec302294a0bb)
 
