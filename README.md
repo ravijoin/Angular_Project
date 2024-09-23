@@ -18,12 +18,6 @@ Fill the registration first if new to the application , all the fileds is having
 
 ![image](https://github.com/user-attachments/assets/d7650dc2-ab14-46a1-8d15-34e8cdd4dd93)
 
-A snackbar will be displayed if successfully logged in .
-
-![image](https://github.com/user-attachments/assets/b1de585a-4c4b-40c1-850c-f7795caa451a)
-
-
-
 2. **Login Page**: 
    - A login form for user authentication.
    - Currently, the API integration for user authentication is not operational, and further debugging is needed.
@@ -37,9 +31,13 @@ Fill the Login form if successfully registered .
 
    ![image](https://github.com/user-attachments/assets/38779a94-eb35-4a38-99c6-8fe8282f7340)
 
-   A snackbar will be displayed and patient will be logged in after successful aprooval by admin.
+  While logging make sure to provide one value only for fields otherwise it will be looggedin.
    
-   ![image](https://github.com/user-attachments/assets/c6245af4-140d-4b1a-8028-8079ee992c24)
+   ![image](https://github.com/user-attachments/assets/0e18d8ea-0a36-4255-ad21-a4270e86c97b)
+
+4.For viewing all the data use the scrollbar and add the searched medicines to the cart .
+
+![image](https://github.com/user-attachments/assets/5343b9d6-c3a7-4ed0-afb5-17aceaeda37c)
 
 
 
