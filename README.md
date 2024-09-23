@@ -10,21 +10,19 @@ This project is a comprehensive Angular-based web application designed for manag
   
      ![image](https://github.com/user-attachments/assets/c1c3e291-beb9-4476-a9c1-867a2bb70a0c)
 
+     Fill the registration first if new to the application , all the fileds is having validation so please fill the correct information.
 
-
-Fill the registration first if new to the application , all the fileds is having validation so please fill the correct information.
-
-![image](https://github.com/user-attachments/assets/d7650dc2-ab14-46a1-8d15-34e8cdd4dd93)
+     ![image](https://github.com/user-attachments/assets/fae60634-1630-4180-aa5d-162e052d9955)
 
 2. **Login Page**: 
    - A login form for user authentication.
    -  All the fileds is having validation so please fill the correct information.
-   -  
-     ![image](https://github.com/user-attachments/assets/38779a94-eb35-4a38-99c6-8fe8282f7340)
+     
+       ![image](https://github.com/user-attachments/assets/a61425de-5444-4e9d-92c1-064fa442cd12)
 
-      While logging make sure to provide one value only for fields otherwise it will be looggedin.
+       While logging make sure to provide one value only for fields otherwise it will not be loggedin.
    
-     ![image](https://github.com/user-attachments/assets/0e18d8ea-0a36-4255-ad21-a4270e86c97b)
+      ![image](https://github.com/user-attachments/assets/0e18d8ea-0a36-4255-ad21-a4270e86c97b)
 
 3. **Dashboard Page**: 
    - Features a search input for finding medicines.
@@ -64,8 +62,6 @@ Fill the registration first if new to the application , all the fileds is having
 
     ![image](https://github.com/user-attachments/assets/3bcb7d07-3b64-4548-bfc8-ec302294a0bb)
 
-
-  
 
 ## Technologies Used
 - **Angular 17**: Front-end framework
