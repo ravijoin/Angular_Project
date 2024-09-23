@@ -60,19 +60,16 @@ Fill the Login form if successfully registered .
    
    ![image](https://github.com/user-attachments/assets/17dc0474-35ce-4fbf-8370-0f72e18d2fae)
 
-
-
-7. **Order Placement**: 
-   - In progress. As api is key required this message I'm getting in logging.
+5. **Order Placement**: 
    - Functionality to place orders for medicines based on the selected items and patient information.
-     
-  Click on the order button and navigate to the Order page . 
-     ![image](https://github.com/user-attachments/assets/b077aae6-bc77-4539-8b56-d65114cdefee)
    
-  Order the medicine with its quantity (In progress).
-    ![image](https://github.com/user-attachments/assets/6cacbb12-856b-4834-872d-06ebc0dbdf6e)
+     Order the medicine with its quantity
+     
+     ![image](https://github.com/user-attachments/assets/c47924e0-fedf-4eda-913d-fb3e904dfd03)
 
+    After sucessfull ordering , it will navigate thank you page nad the cart will be cleared.
 
+    ![image](https://github.com/user-attachments/assets/3bcb7d07-3b64-4548-bfc8-ec302294a0bb)
 
 
   
