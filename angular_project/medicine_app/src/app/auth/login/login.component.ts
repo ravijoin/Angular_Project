@@ -63,16 +63,19 @@ export class LoginComponent {
       // Make API call
       this.patientService.getPatientDetails(patient_id, mobile).subscribe({
         next: (response) => {
-          if (response.status_message) {
-            this.snackBar.open(response.status_message, 'OK', {
-              duration: 4000,
-            });
+          if (response.status_code === '1'){
+            this.snackBar.open('Login Successful', 'OK', { duration: 4000 });
 
             // If the login is successful, store the API key in localStorage
             this.patientService.storeApiKey('wFIMP75eG1sQEh8vVAdXykgzF4mLhDw3'); // Store API key
 
             // Navigate to the dashboard after successful login
             this.router.navigate(['/dashboard/search-medicine']);
+          }
+          else{
+            this.snackBar.open(response.status_message, 'OK', {
+              duration: 4000,
+            });
           }
         },
         error: (error) => {
