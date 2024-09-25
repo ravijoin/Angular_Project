@@ -1,5 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { PatientService } from '../../shared/service/patient.service';
 
 @Component({
   selector: 'app-page-thank',
@@ -10,10 +11,11 @@ import { Router } from '@angular/router';
 })
 export class PageThankComponent  {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private patientService:PatientService) {}
 
   // Navigate to the home page when the button is clicked
   goToHome() {
-    this.router.navigate(['/home']);
+    this.patientService.logOut();
+    this.router.navigate(['/login']);
   }
 }
