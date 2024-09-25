@@ -3,12 +3,16 @@
   justify-content: space-between;
   height: 100%;
   width: 90%;
+  position: relative;
 }
 
 .register-form {
   width: 600px;
 
   mat-card {
+    border-radius: 1.5rem !important;
+    position: relative; /* Allow positioning within this card */
+    overflow: hidden;
     mat-card-header {
       display: flex;
       justify-content: center;
@@ -33,6 +37,13 @@
         margin: 0;
         padding-right: 1rem;
       }
+      .progress-bar {
+        width: 100%;
+        max-width: 600px;
+        border-bottom-left-radius: 1.5rem; /* Rounded corners to match the card */
+        border-bottom-right-radius: 1.5rem;
+        overflow: hidden; /* Prevents the bar from overflowing */
+      }
     }
   }
 }
@@ -41,6 +52,8 @@
   width: 550px;
   padding: 0.8rem;
   border-left: 1px solid white;
+  position: relative;
+  left: 3rem;
 
   mat-list-item {
     height: auto;

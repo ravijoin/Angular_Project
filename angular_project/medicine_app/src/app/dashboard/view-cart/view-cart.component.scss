@@ -4,13 +4,18 @@
   align-items: center;
   margin-top: 20px;
 }
-.cart-summary button{
+.cart-summary button {
   position: relative;
-  left:2rem ;
+  left: 2rem;
 }
 
 table {
   width: 100%;
+}
+
+.progress-bar {
+  width: 100%;
+  border-radius: 0 0 8px 8px;
 }
 
 .header-content {
@@ -22,9 +27,9 @@ table {
 
 .search-button {
   position: relative;
-    // top: 0.5rem;
-    bottom: 0.5rem;
-    left: 60rem;
+  // top: 0.5rem;
+  bottom: 0.5rem;
+  left: 60rem;
 }
 
 /* Optional: Media query for smaller screens */
@@ -39,4 +44,3 @@ table {
     width: 100%;
   }
 }
-

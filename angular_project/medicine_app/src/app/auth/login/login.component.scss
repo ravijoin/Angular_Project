@@ -8,12 +8,23 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px;
+  position: relative;
+}
+
+.progress-bar {
+  width: 100%;
+  max-width: 600px;
+  border-bottom-left-radius: 1.5rem; /* Rounded corners to match the card */
+  border-bottom-right-radius: 1.5rem;
+  overflow: hidden; /* Prevents the bar from overflowing */
 }
 
 .login-card {
   flex: 1;
   max-width: 600px;
-  border-radius: 2rem;
+  border-radius: 1.5rem; /* Rounded corners */
+  position: relative; /* Allow positioning within this card */
+  overflow: hidden; /* Ensures inner content like the progress bar respects the border-radius */
 }
 
 .login-image {
