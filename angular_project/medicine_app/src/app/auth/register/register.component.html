@@ -113,7 +113,12 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-raised-button color="accent" (click)="register()"  [disabled]="!registerForm.valid">
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="register()"
+        [disabled]="!registerForm.valid"
+      >
         Register
       </button>
     </mat-card-actions>
@@ -122,6 +127,12 @@
       <h4>Already have an account?</h4>
       <a mat-stroked-button color="accent" routerLink="/login">Login</a>
     </mat-card-actions>
+    <!-- Progress Bar -->
+    <mat-progress-bar
+      *ngIf="isLoading"
+      mode="indeterminate"
+      class="progress-bar"
+    ></mat-progress-bar>
   </mat-card>
 </div>
 

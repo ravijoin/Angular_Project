@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   hidePassword: boolean = true;
+  isLoading = false;
 
   constructor(
     fb: FormBuilder,
@@ -46,33 +47,39 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
+      this.isLoading = true;
       const mobile = this.loginForm.get('mobile')?.value;
       const patient_id = this.loginForm.get('patient_id')?.value;
 
       // Debugging - check the form values
       console.log('Form values:', { mobile, patient_id });
 
-        // Check if both fields are filled
-    if (mobile && patient_id) {
-      this.snackBar.open('Please provide only one field: mobile or patient ID.', 'OK', {
-        duration: 4000,
-      });
-      return; // Exit the function early
-    }
+      // Check if both fields are filled
+      if (mobile && patient_id) {
+        this.snackBar.open(
+          'Please provide only one field: mobile or patient ID.',
+          'OK',
+          {
+            duration: 4000,
+          }
+        );
+        return; // Exit the function early
+      }
 
       // Make API call
       this.patientService.getPatientDetails(patient_id, mobile).subscribe({
         next: (response) => {
-          if (response.status_code === '1'){
+          if (response.status_code === '1') {
             this.snackBar.open('Login Successful', 'OK', { duration: 4000 });
 
             // If the login is successful, store the API key in localStorage
             this.patientService.storeApiKey('wFIMP75eG1sQEh8vVAdXykgzF4mLhDw3'); // Store API key
 
             // Navigate to the dashboard after successful login
-            this.router.navigate(['/dashboard/search-medicine']);
-          }
-          else{
+            setTimeout(() => {
+              this.router.navigate(['/dashboard/search-medicine']);
+            }, 4000);
+          } else {
             this.snackBar.open(response.status_message, 'OK', {
               duration: 4000,
             });

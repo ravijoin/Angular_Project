@@ -14,6 +14,7 @@ import { CartService } from '../../shared/service/cart.service';
 export class PlaceOrderComponent {
   orderForm!: FormGroup;
   checkoutItems: any[] = [];
+  isLoading = false;
   constructor(
     private fb: FormBuilder,
     private orderService: OrderService,
@@ -31,7 +32,10 @@ export class PlaceOrderComponent {
     this.orderForm = this.fb.group({
       items: this.fb.array([this.createItem()]), // Create a FormArray for items
       delivery_type: ['', Validators.required],
-      patient_name: ['', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+      patient_name: [
+        '',
+        [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)],
+      ],
       mobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       address: ['', Validators.required],
       city: ['', Validators.required],
@@ -72,21 +76,26 @@ export class PlaceOrderComponent {
   // Submit the form data
   onSubmit(): void {
     if (this.orderForm.valid) {
+      this.isLoading = true; // Start showing the progress bar
       // Stringify the 'items' array before sending it in the request
       const formData = { ...this.orderForm.value };
       formData.items = JSON.stringify(this.orderForm.value.items);
 
       this.orderService.placeOrder(formData).subscribe({
         next: (response) => {
+          this.isLoading = false; // Stop loading
           this.snackBar.open('Order placed successfully!', 'OK', {
             duration: 4000,
           });
-          this.cartService.clearCart();  // Clear the cart after successful order
+          this.cartService.clearCart(); // Clear the cart after successful order
           console.log('Order placed successfully', response);
           // You can navigate to another page if needed
-          this.router.navigate(['/dashboard/thankyou']);
+          setTimeout(() => {
+            this.router.navigate(['/dashboard/thankyou']);
+          }, 2000);
         },
         error: (error) => {
+          this.isLoading = false; // Stop loading
           this.snackBar.open('Error placing order. Please try again.', 'OK', {
             duration: 4000,
           });
@@ -101,12 +110,13 @@ export class PlaceOrderComponent {
   }
   loadCheckoutItems() {
     this.checkoutItems = this.orderService.getOrderItems();
-    this.checkoutItems.forEach(item => {
-      this.items.push(this.fb.group({
-
-        medicine_id: [item.medicine_id, Validators.required],
-        quantity: [item.quantity, [Validators.required, Validators.min(1)]]
-      }));
+    this.checkoutItems.forEach((item) => {
+      this.items.push(
+        this.fb.group({
+          medicine_id: [item.medicine_id, Validators.required],
+          quantity: [item.quantity, [Validators.required, Validators.min(1)]],
+        })
+      );
     });
   }
   // Optionally, load initial data if needed

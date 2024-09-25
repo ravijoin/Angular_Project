@@ -14,8 +14,14 @@ import { OrderService } from '../../shared/service/order.service';
 export class ViewCartComponent {
   form!: FormGroup;
   cartItems: any[] = [];
-  displayedColumns: string[] = ['medicine_name','medicine_id', 'quantity', 'price', 'remove'];
-
+  displayedColumns: string[] = [
+    'medicine_name',
+    'medicine_id',
+    'quantity',
+    'price',
+    'remove',
+  ];
+  isCheckingOut = false;
   constructor(
     private cd: ChangeDetectorRef,
     private cartService: CartService,
@@ -28,30 +34,30 @@ export class ViewCartComponent {
     this.loadCartItems();
   }
 
-
   searchMedicine(): void {
-
     // Navigate or open a dialog to search medicines
 
-    this.router.navigate(['dashboard/search-medicine'])
+    this.router.navigate(['dashboard/search-medicine']);
   }
 
   // Initialize form with a FormArray of items
   initializeForm(): void {
     this.form = this.fb.group({
-      items: this.fb.array(this.cartItems.map(item => this.createItemFormGroup(item)))
+      items: this.fb.array(
+        this.cartItems.map((item) => this.createItemFormGroup(item))
+      ),
     });
   }
 
-    // Create a FormGroup for each item in the cart
-    createItemFormGroup(item: any): FormGroup {
-      return this.fb.group({
-        medicine_name: [item.medicine_name],
-        medicine_id: [item.medicine_id],
-        quantity: [item.quantity],
-        price: [item.price]
-      });
-    }
+  // Create a FormGroup for each item in the cart
+  createItemFormGroup(item: any): FormGroup {
+    return this.fb.group({
+      medicine_name: [item.medicine_name],
+      medicine_id: [item.medicine_id],
+      quantity: [item.quantity],
+      price: [item.price],
+    });
+  }
   // Load cart items from the CartService
   loadCartItems(): void {
     this.cartItems = this.cartService.getCartItems();
@@ -86,9 +92,8 @@ export class ViewCartComponent {
     );
   }
 
-
-   // Remove item from the cart
-   removeFromCart(index: number): void {
+  // Remove item from the cart
+  removeFromCart(index: number): void {
     const item = this.cartItems[index];
     this.cartService.removeItemFromCart(item);
     this.items.removeAt(index); // Remove the form control for this item
@@ -99,12 +104,9 @@ export class ViewCartComponent {
     this.loadCartItems();
   }
 
-
-
-
-
   // Proceed to checkout
   checkout(): void {
+    this.isCheckingOut = true;
     const checkoutItems = this.cartItems.map((item) => ({
       medicine_id: item.medicine_id,
       quantity: item.quantity,
@@ -114,6 +116,9 @@ export class ViewCartComponent {
     this.orderService.setOrderItems(checkoutItems);
 
     // Navigate to the order checkout page
-    this.router.navigate(['dashboard/order-checkout']);
+    // Set a timeout before navigating to the login page
+    setTimeout(() => {
+      this.router.navigate(['dashboard/order-checkout']);
+    }, 2000);
   }
 }

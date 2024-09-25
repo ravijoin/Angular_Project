@@ -2,7 +2,12 @@
   <mat-card-header>
     <div class="header-content">
       <mat-card-title>Your Cart</mat-card-title>
-      <button mat-raised-button color="primary" class="search-button" (click)="searchMedicine()">
+      <button
+        mat-raised-button
+        color="primary"
+        class="search-button"
+        (click)="searchMedicine()"
+      >
         Search Medicine
       </button>
     </div>
@@ -60,9 +65,7 @@
           <th mat-header-cell *matHeaderCellDef>Price</th>
           <td mat-cell *matCellDef="let item; let i = index">
             <div formArrayName="items">
-              <div [formGroupName]="i">
-                ₹{{ item.price }}
-              </div>
+              <div [formGroupName]="i">₹{{ item.price }}</div>
             </div>
           </td>
         </ng-container>
@@ -73,20 +76,41 @@
           <td mat-cell *matCellDef="let item; let i = index">
             <div formArrayName="items">
               <div [formGroupName]="i">
-            <button
-              mat-raised-button
-              color="warn"
-              (click)="removeFromCart(i)"
-            >
-              Remove
-            </button>
+                <button
+                  mat-raised-button
+                  color="warn"
+                  (click)="removeFromCart(i)"
+                >
+                  Remove
+                </button>
               </div>
-              </div>
+            </div>
           </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="['medicine_name', 'medicine_id', 'quantity', 'price', 'remove']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['medicine_name', 'medicine_id', 'quantity', 'price', 'remove']"></tr>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="[
+            'medicine_name',
+            'medicine_id',
+            'quantity',
+            'price',
+            'remove'
+          ]"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="
+            let row;
+            columns: [
+              'medicine_name',
+              'medicine_id',
+              'quantity',
+              'price',
+              'remove'
+            ]
+          "
+        ></tr>
       </table>
     </form>
   </mat-card-content>
@@ -100,9 +124,20 @@
   <mat-card-actions *ngIf="cartItems.length > 0">
     <div class="cart-summary">
       <h3>Total: ₹{{ getTotalPrice() }}</h3>
-      <button class="btn-checkout" mat-raised-button color="primary" (click)="checkout()">
+      <button
+        class="btn-checkout"
+        mat-raised-button
+        color="primary"
+        (click)="checkout()"
+      >
         Proceed to Checkout
       </button>
     </div>
   </mat-card-actions>
+  <!-- !-- Progress Bar shown when loading is true -->
+  <mat-progress-bar
+    *ngIf="isCheckingOut"
+    mode="indeterminate"
+    class="progress-bar"
+  ></mat-progress-bar>
 </mat-card>

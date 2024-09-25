@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
   templateUrl: './order-checkout.component.html',
   styleUrl: './order-checkout.component.scss',
 })
-export class OrderCheckoutComponent implements OnInit{
+export class OrderCheckoutComponent implements OnInit {
   orderForm!: FormGroup;
   checkoutItems: any[] = [];
-
+  isLoading = false;
   constructor(
     private fb: FormBuilder,
     private orderService: OrderService,
@@ -31,8 +31,14 @@ export class OrderCheckoutComponent implements OnInit{
   createForm(): void {
     this.orderForm = this.fb.group({
       items: this.fb.array([]),
-      latitude: ['', [Validators.required, Validators.pattern(/^-?\d+(\.\d+)?$/)]],
-      longitude: ['', [Validators.required, Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      latitude: [
+        '',
+        [Validators.required, Validators.pattern(/^-?\d+(\.\d+)?$/)],
+      ],
+      longitude: [
+        '',
+        [Validators.required, Validators.pattern(/^-?\d+(\.\d+)?$/)],
+      ],
       distance: ['', [Validators.required, Validators.min(1)]],
     });
   }
@@ -60,42 +66,72 @@ export class OrderCheckoutComponent implements OnInit{
 
   onSubmit(): void {
     if (this.orderForm.valid) {
+      this.isLoading = true; // Start showing the progress bar
       const formData = { ...this.orderForm.value };
       formData.items = JSON.stringify(this.orderForm.value.items);
 
       this.orderService.checkoutOrder(formData).subscribe({
         next: (response: any) => {
+          this.isLoading = false; // Stop loading
           if (response.status_code === '1') {
             const items = response.data.items;
-            const availableItems = items.filter((item: { available: string; }) => item.available === 'yes');
+            const availableItems = items.filter(
+              (item: { available: string }) => item.available === 'yes'
+            );
 
             if (availableItems.length > 0) {
-              this.router.navigate(['/dashboard/place-orders'], { state: { orderData: formData } });
-              this.snackBar.open('Medicines available.Place the order', 'OK', { duration: 4000 });
+              // Set a timeout before navigating to the login page
+              setTimeout(() => {
+                this.router.navigate(['/dashboard/place-orders'], {
+                  state: { orderData: formData },
+                });
+              }, 2000);
             } else {
-              this.snackBar.open('No available medicines in your area.Please search for the alternatives', 'OK', { duration: 4000 });
+              this.snackBar.open(
+                'No available medicines in your area.Please search for the alternatives',
+                'OK',
+                { duration: 4000 }
+              );
             }
+            this.snackBar.open('Medicines available.Place the order', 'OK', {
+              duration: 4000,
+            });
           } else {
-            this.snackBar.open(response.status_message + '.' +'Please search for the alternatives', 'OK', { duration: 4000 });
+            this.snackBar.open(
+              response.status_message +
+                '.' +
+                'Please search for the alternatives',
+              'OK',
+              { duration: 4000 }
+            );
           }
         },
         error: (error: any) => {
-          this.snackBar.open('Error placing the order. Please try again.', 'OK', { duration: 4000 });
+          this.isLoading = false; // Stop loading
+          this.snackBar.open(
+            'Error placing the order. Please try again.',
+            'OK',
+            { duration: 4000 }
+          );
           console.error('Error placing order:', error);
         },
       });
     } else {
-      this.snackBar.open('Please fill the form correctly.', 'OK', { duration: 4000 });
+      this.snackBar.open('Please fill the form correctly.', 'OK', {
+        duration: 4000,
+      });
     }
   }
 
   loadCheckoutItems() {
     this.checkoutItems = this.orderService.getOrderItems();
-    this.checkoutItems.forEach(item => {
-      this.items.push(this.fb.group({
-        medicine_id: [item.medicine_id, Validators.required],
-        quantity: [item.quantity, [Validators.required, Validators.min(1)]]
-      }));
+    this.checkoutItems.forEach((item) => {
+      this.items.push(
+        this.fb.group({
+          medicine_id: [item.medicine_id, Validators.required],
+          quantity: [item.quantity, [Validators.required, Validators.min(1)]],
+        })
+      );
     });
   }
 }
