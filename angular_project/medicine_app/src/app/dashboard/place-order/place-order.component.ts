@@ -26,6 +26,35 @@ export class PlaceOrderComponent {
   }
   ngOnInit(): void {
     this.loadCheckoutItems();
+    this.getCurrentLocation();
+  }
+
+  geolocationError = '';
+  // Get the current location of the user using the browser's geolocation API
+  getCurrentLocation(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          // Update the form with the retrieved latitude and longitude
+          this.orderForm.patchValue({
+            latitude: lat,
+            longitude: lon,
+          });
+        },
+        (error) => {
+          this.isLoading = false; // Stop loading on error
+          this.geolocationError =
+            'Unable to retrieve your location. Please allow location access.';
+          this.snackBar.open(this.geolocationError, 'OK', { duration: 4000 });
+        }
+      );
+    } else {
+      this.geolocationError = 'Geolocation is not supported by this browser.';
+      this.snackBar.open(this.geolocationError, 'OK', { duration: 4000 });
+    }
   }
   // Initialize the form group
   createForm(): void {
@@ -84,15 +113,22 @@ export class PlaceOrderComponent {
       this.orderService.placeOrder(formData).subscribe({
         next: (response) => {
           this.isLoading = false; // Stop loading
-          this.snackBar.open('Order placed successfully!', 'OK', {
-            duration: 4000,
-          });
-          this.cartService.clearCart(); // Clear the cart after successful order
-          console.log('Order placed successfully', response);
-          // You can navigate to another page if needed
-          setTimeout(() => {
-            this.router.navigate(['/dashboard/thankyou']);
-          }, 2000);
+          if (response.status_code === '1') {
+            this.snackBar.open('Order placed successfully!', 'OK', {
+              duration: 4000,
+            });
+            this.cartService.clearCart(); // Clear the cart after successful order
+            console.log('Order placed successfully', response);
+            // You can navigate to another page if needed
+            setTimeout(() => {
+              this.router.navigate(['/dashboard/thankyou']);
+            }, 2000);
+          }
+          else {
+            this.snackBar.open(response.status_message, 'OK', {
+              duration: 4000,
+            });
+          }
         },
         error: (error) => {
           this.isLoading = false; // Stop loading
@@ -101,10 +137,6 @@ export class PlaceOrderComponent {
           });
           console.error('Error placing order', error);
         },
-      });
-    } else {
-      this.snackBar.open('Please fill the form correctly.', 'OK', {
-        duration: 4000,
       });
     }
   }
