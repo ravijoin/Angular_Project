@@ -23,10 +23,37 @@ export class OrderCheckoutComponent implements OnInit {
   ) {
     this.createForm();
   }
-
+  geolocationError = '';
   ngOnInit(): void {
     this.loadCheckoutItems();
+    this.getCurrentLocation(); // Get the user's location when the component loads
   }
+
+ // Get the current location of the user using the browser's geolocation API
+ getCurrentLocation(): void {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        // Update the form with the retrieved latitude and longitude
+        this.orderForm.patchValue({
+          latitude: lat,
+          longitude: lon,
+        });
+      },
+      (error) => {
+        this.isLoading = false; // Stop loading on error
+        this.geolocationError = 'Unable to retrieve your location. Please allow location access.';
+        this.snackBar.open(this.geolocationError, 'OK', { duration: 4000 });
+      }
+    );
+  } else {
+    this.geolocationError = 'Geolocation is not supported by this browser.';
+    this.snackBar.open(this.geolocationError, 'OK', { duration: 4000 });
+  }
+}
 
   createForm(): void {
     this.orderForm = this.fb.group({
@@ -134,4 +161,6 @@ export class OrderCheckoutComponent implements OnInit {
       );
     });
   }
+
+
 }
